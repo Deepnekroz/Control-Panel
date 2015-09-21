@@ -80,10 +80,6 @@ public class ApplicationContextConfig {
         return viewResolver;
     }
 
-
-
-
-
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", "true");

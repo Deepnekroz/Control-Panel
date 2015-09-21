@@ -17,6 +17,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        //sasdas
         auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
         auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
         auth.inMemoryAuthentication().withUser("superadmin").password("superadmin").roles("SUPERADMIN");

@@ -28,12 +28,22 @@ public class MainController {
         model.addAttribute("responseJson", jsonObject.toString());
     }
 
+    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
+    public String adminPage(Model model){
+        LOG.debug("Received /admin request...");
+
+
+        model.addAttribute("responseJson", "Restricted area!");
+        return "admin/admin";
+    }
+
+
     @ExceptionHandler(Exception.class) @ResponseBody
     public String handleAllException(Exception ex) {
         JsonObject jsonObject = new JsonObject();
 
         if(ex instanceof SQLGrammarException){
-            jsonObject.addProperty("status", "404");
+            jsonObject.addProperty("status", "500");
             jsonObject.addProperty("message", "SQLGrammarException");
         }
 

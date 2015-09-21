@@ -25,7 +25,7 @@ public class MainController {
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("parameter", param);
-        model.addAttribute("text", jsonObject.toString());
+        model.addAttribute("responseJson", jsonObject.toString());
     }
 
     @ExceptionHandler(Exception.class) @ResponseBody

@@ -4,7 +4,12 @@
     <title></title>
   </head>
   <body>
-  <h1>${responseJson}</h1>
+  <script>
+      var a = ${responseJson};
+      alert(a["parameter"]);
+  </script>
+
+
 
   </body>
 </html>

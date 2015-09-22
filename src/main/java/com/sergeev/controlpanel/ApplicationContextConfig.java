@@ -1,5 +1,10 @@
 package com.sergeev.controlpanel;
 
+import com.sergeev.controlpanel.model.Component;
+import com.sergeev.controlpanel.model.ComponentType;
+import com.sergeev.controlpanel.model.Node;
+import com.sergeev.controlpanel.model.dao.NodeDaoImpl;
+import com.sergeev.controlpanel.model.dao.NodeDaoInterface;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +46,7 @@ public class ApplicationContextConfig {
 
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 
-        //sessionBuilder.addAnnotatedClasses(User.class, Prediction.class);
+        sessionBuilder.addAnnotatedClasses(Node.class, Component.class, ComponentType.class);
         sessionBuilder.scanPackages("com.sergeev.controlpanel.model");
         sessionBuilder.addProperties(getHibernateProperties());
         sessionBuilder.setProperty("hibernate.connection.CharSet", "utf8");
@@ -60,17 +65,13 @@ public class ApplicationContextConfig {
         return transactionManager;
     }
 
-//    @Autowired
-//    @Bean(name = "userDao")
-//    public UserDaoInterface getUserDao(SessionFactory sessionFactory) {
-//        return new UserDao(sessionFactory);
-//    }
-//
-//    @Autowired
-//    @Bean(name = "predictionDao")
-//    public PredictionDaoInterface getPredictionDao(SessionFactory sessionFactory) {
-//        return new PredictionDao(sessionFactory);
-//    }
+    @Autowired
+    @Bean(name = "nodeDao")
+    public NodeDaoInterface getUserDao(SessionFactory sessionFactory) {
+        return new NodeDaoImpl(sessionFactory);
+    }
+
+
 
     @Bean(name = "viewResolver")
     public InternalResourceViewResolver getViewResolver() {
@@ -84,6 +85,7 @@ public class ApplicationContextConfig {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        properties.put("hibernate.hbm2ddl.auto", "update");
         return properties;
     }
 }

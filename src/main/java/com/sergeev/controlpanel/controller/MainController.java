@@ -1,11 +1,20 @@
 package com.sergeev.controlpanel.controller;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.hibernate.exception.SQLGrammarException;
+import com.google.gson.JsonParser;
+import com.sergeev.controlpanel.model.Node;
+import com.sergeev.controlpanel.model.dao.NodeDaoImpl;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * Created by dmitry-sergeev on 02.09.15.
@@ -15,17 +24,45 @@ public class MainController {
 
     private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(MainController.class);
 
-//    @Autowired
-//    private UserDao userDao;
+    @Autowired
+    private NodeDaoImpl nodeDao;
 
-    @RequestMapping(value = "/welcome", method = RequestMethod.GET, params = {"param"})
-    public void getWelcome(Model model,
-                           @RequestParam(value = "param") String param){
-        LOG.debug("Received /welcome request...");
+    @RequestMapping(value = "/node", method = RequestMethod.POST,
+                    params = {"name", "inetaddr", "osName", "osVersion"})
+    @ResponseBody
+    public ResponseEntity getWelcome(Model model,
+                           @RequestParam(value = "name") String name,
+                           @RequestParam(value = "inetaddr") String inetaddr,
+                           @RequestParam(value = "osName") String osName,
+                           @RequestParam(value = "osVersion") String osVersion)
+                            throws UnknownHostException{
+        LOG.debug("Received /node POST request...");
+
+        Node node = new Node(name, InetAddress.getByName(inetaddr), osName, osVersion);
+        nodeDao.persist(node);
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("parameter", param);
-        model.addAttribute("responseJson", jsonObject.toString());
+        jsonObject.addProperty("status", "ok");
+
+        return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+    }
+    @RequestMapping(value = "/node", method = RequestMethod.GET,
+            params = {"id"})
+    @ResponseBody
+    public String getWelcome(Model model,
+                                     @RequestParam(value = "id") Long id)
+            throws UnknownHostException{
+        LOG.debug("Received /node GET request for id {}...", id);
+
+        Node node = nodeDao.findById(id);
+
+        LOG.debug("Node looks like: " + node.toString());
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("status", "ok");
+        jsonObject.add("node", new JsonParser().parse(node.toString())); //TODO redundant parse
+
+        return jsonObject.toString();
     }
 
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
@@ -42,9 +79,9 @@ public class MainController {
     public String handleAllException(Exception ex) {
         JsonObject jsonObject = new JsonObject();
 
-        if(ex instanceof SQLGrammarException){
-            jsonObject.addProperty("status", "500");
-            jsonObject.addProperty("message", "SQLGrammarException");
+        if(ex instanceof UnknownHostException){
+            jsonObject.addProperty("status", "400");
+            jsonObject.addProperty("message", "Unknown host address given");
         }
 
         return jsonObject.toString();

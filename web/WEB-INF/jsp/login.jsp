@@ -14,28 +14,6 @@
   <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-<%--<div class="form-signin" style="width: 50%;">--%>
-  <%--<div tiles:fragment="content">--%>
-    <%--<form name="f" th:action="@{/login}" method="post">--%>
-      <%--<fieldset>--%>
-        <%--<h2 class="form-signin-heading">Please Login</h2>--%>
-        <%--<div th:if="${param.error}" class="alert alert-error">--%>
-          <%--Invalid username and password.--%>
-        <%--</div>--%>
-        <%--<div th:if="${param.logout}" class="alert alert-success">--%>
-          <%--You have been logged out.--%>
-        <%--</div>--%>
-        <%--<label for="username" class="sr-only">Username</label>--%>
-        <%--<input type="text" id="username" name="username" class="form-control"/>--%>
-        <%--<label for="password" class="sr-only">Password</label>--%>
-        <%--<input type="password" id="password" name="password" class="form-control"/>--%>
-        <%--<div class="form-actions">--%>
-          <%--<button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>--%>
-        <%--</div>--%>
-      <%--</fieldset>--%>
-    <%--</form>--%>
-  <%--</div>--%>
-<%--</div>--%>
 
 <div class="container">
   <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -55,6 +33,7 @@
             <div class="error">${error}</div>
           </c:if>
           <c:if test="${not empty msg}">
+            <script>$("#login-alert").show()</script>
             <div class="msg">${msg}</div>
           </c:if>
         </div>
@@ -72,12 +51,9 @@
           </div>
 
 
-          <div style="margin-top:10px" class="form-group">
-            <!-- Button -->
-
+          <div style="margin-top:10px; text-align:right;" class="form-group">
             <div class="col-sm-12 controls">
-              <button id="btn-login" class="btn btn-success" type="submit">Login  </button>
-
+              <button id="btn-login" class="btn btn-success" type="submit">Login</button>
             </div>
           </div>
 

@@ -126,6 +126,11 @@ public class MainController {
 
     }
 
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String page403(){
+        return "403";
+    }
+
 
     @ExceptionHandler(Exception.class) @ResponseBody
     public String handleAllException(Exception ex) {

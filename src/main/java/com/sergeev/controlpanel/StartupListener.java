@@ -23,6 +23,8 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event) {
-        userDao.persist(new User("admin", new BCryptPasswordEncoder().encode("12345"), UserRole.ROLE_ADMIN, new ArrayList<Node>(), true));
+        userDao.persist(new User("admin", new BCryptPasswordEncoder().encode("12345"), UserRole.ROLE_ADMIN, new ArrayList<>(), true));
+        userDao.persist(new User("user", new BCryptPasswordEncoder().encode("12345"), UserRole.ROLE_USER, new ArrayList<>(), true));
+
     }
 }

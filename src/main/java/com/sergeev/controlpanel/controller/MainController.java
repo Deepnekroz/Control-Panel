@@ -103,7 +103,7 @@ public class MainController {
     public String adminPage(Model model){
         LOG.debug("Received /admin request...");
         model.addAttribute("responseJson", "Restricted area!");
-        return "admin/admin";
+        return "redirect:/admin/index.html";
     }
 
     //Spring Security see this :

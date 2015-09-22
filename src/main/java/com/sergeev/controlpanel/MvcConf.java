@@ -18,6 +18,8 @@ public class MvcConf extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/").setCachePeriod(31556926);
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/").setCachePeriod(31556926);
         registry.addResourceHandler("/fonts/**").addResourceLocations("/resources/fonts/").setCachePeriod(31556926);
+        registry.addResourceHandler("/admin/**").addResourceLocations("/resources/admin/").setCachePeriod(31556926);
+
     }
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {

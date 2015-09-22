@@ -1,77 +1,27 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
 <head>
-
-  <style>
-    .error {
-      padding: 15px;
-      margin-bottom: 20px;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      color: #a94442;
-      background-color: #f2dede;
-      border-color: #ebccd1;
-    }
-
-    .msg {
-      padding: 15px;
-      margin-bottom: 20px;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      color: #31708f;
-      background-color: #d9edf7;
-      border-color: #bce8f1;
-    }
-
-    #login-box {
-      width: 300px;
-      padding: 20px;
-      margin: 100px auto;
-      background: #fff;
-      -webkit-border-radius: 2px;
-      -moz-border-radius: 2px;
-      border: 1px solid #000;
-    }
-  </style>
+  <title tiles:fragment="title">Messages : Create</title>
 </head>
-<body onload='document.loginForm.username.focus();'>
-
-<h1>Spring Security Custom Login Form (Annotation)</h1>
-
-<div id="login-box">
-
-  <h2>Login with Username and Password</h2>
-
-  <c:if test="${not empty error}">
-    <div class="error">${error}</div>
-  </c:if>
-  <c:if test="${not empty msg}">
-    <div class="msg">${msg}</div>
-  </c:if>
-
-  <form name='loginForm'
-        action="${loginUrl}" method='POST'>
-
-    <table>
-      <tr>
-        <td>User:</td>
-        <td><input type='text' name='username' id="username" value=''></td>
-      </tr>
-      <tr>
-        <td>Password:</td>
-        <td><input type='password' name='password' id="password" /></td>
-      </tr>
-      <tr>
-        <td colspan='2'>
-          <input name="submit" type="submit" value="submit" />
-        </td>
-      </tr>
-    </table>
-
-    <input type="hidden"
-           name="${_csrf.parameterName}" value="${_csrf.token}" />
+<body>
+<div tiles:fragment="content">
+  <form name="f" th:action="@{/login}" method="post">
+    <fieldset>
+      <legend>Please Login</legend>
+      <div th:if="${param.error}" class="alert alert-error">
+        Invalid username and password.
+      </div>
+      <div th:if="${param.logout}" class="alert alert-success">
+        You have been logged out.
+      </div>
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username"/>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password"/>
+      <div class="form-actions">
+        <button type="submit" class="btn">Log in</button>
+      </div>
+    </fieldset>
   </form>
 </div>
-
 </body>
 </html>

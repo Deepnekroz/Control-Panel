@@ -4,11 +4,6 @@ package com.sergeev.controlpanel;
  * Created by dmitry-sergeev on 03.09.15.
  */
 
-import com.sergeev.controlpanel.model.dao.user.UserDaoImpl;
-import com.sergeev.controlpanel.model.user.User;
-import com.sergeev.controlpanel.model.user.UserRole;
-import com.sergeev.controlpanel.utils.PasswordEncoderImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;

@@ -36,11 +36,12 @@ public class User {
     public User() {
     }
 
-    public User(String name, String password, UserRole role, List<Node> nodeList) {
+    public User(String name, String password, UserRole role, List<Node> nodeList, boolean enabled) {
         this.name = name;
         this.password = password;
         this.role = role;
         this.nodeList = nodeList;
+        this.enabled = enabled;
     }
 
     public String getName() {

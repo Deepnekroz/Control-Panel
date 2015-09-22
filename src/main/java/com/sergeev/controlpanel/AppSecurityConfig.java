@@ -1,6 +1,5 @@
 package com.sergeev.controlpanel;
 
-import com.sergeev.controlpanel.utils.PasswordEncoderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -35,9 +34,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/admin**")
+        http.authorizeRequests().antMatchers("/admin/**")
                 .access("hasRole('ROLE_ADMIN')").and().formLogin()
-                .loginPage("/login").failureUrl("/login?error")
+                .loginPage("/login").failureUrl("/login?error").defaultSuccessUrl("/admin")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout().logoutSuccessUrl("/login?logout")
@@ -47,7 +46,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        PasswordEncoder encoder = new PasswordEncoderImpl();
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
     }
 

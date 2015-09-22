@@ -5,7 +5,7 @@
 <h1>Title : ${title}</h1>
 <h1>Message : ${message}</h1>
 
-<c:url value="/j_spring_security_logout" var="logoutUrl" />
+<c:url var="logoutUrl" value="/logout"/>
 
 <!-- csrt for log out-->
 <form action="${logoutUrl}" method="post" id="logoutForm">

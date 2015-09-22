@@ -1,22 +1,17 @@
 package com.sergeev.controlpanel.controller;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.sergeev.controlpanel.model.Node;
 import com.sergeev.controlpanel.model.dao.node.NodeDaoImpl;
 import com.sergeev.controlpanel.model.dao.user.UserDaoImpl;
-import com.sergeev.controlpanel.model.dao.user.UserDaoInterface;
 import com.sergeev.controlpanel.model.user.User;
 import com.sergeev.controlpanel.model.user.UserRole;
-import com.sergeev.controlpanel.utils.PasswordEncoderImpl;
 import com.sergeev.controlpanel.utils.Utils;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by dmitry-sergeev on 02.09.15.
@@ -40,8 +34,6 @@ public class MainController {
 
     @Autowired
     private UserDaoImpl userDao;
-
-    PasswordEncoder passwordEncoder = new PasswordEncoderImpl();
 
     @RequestMapping(value = "/node", method = RequestMethod.POST,
                     params = {"name", "inetaddr", "osName", "osVersion"})
@@ -99,7 +91,7 @@ public class MainController {
                           @RequestParam(value = "role") String role){
         LOG.debug("Received /admin/user for user={}...", username);
 
-        User user = new User(username, passwordEncoder.encode(password), UserRole.valueOf(role), null);
+        User user = new User(username, new BCryptPasswordEncoder().encode(password), UserRole.valueOf(role), new ArrayList<>(), true);
         userDao.persist(user);
 
         JsonObject jsonObject = new JsonObject();
@@ -107,7 +99,7 @@ public class MainController {
         return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin*", method = RequestMethod.GET)
     public String adminPage(Model model){
         LOG.debug("Received /admin request...");
         model.addAttribute("responseJson", "Restricted area!");

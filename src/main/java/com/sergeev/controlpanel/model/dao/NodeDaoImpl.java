@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by dmitry-sergeev on 22.09.15.
@@ -54,7 +55,13 @@ public class NodeDaoImpl implements NodeDaoInterface<Node, Long> {
 
     @Override @Transactional @SuppressWarnings("unchecked")
     public List<Node> getAll() {
-        return getCurrentSession().createQuery("from Node").list();
+        return (List<Node>)getCurrentSession().createQuery("from Node")
+                                                .list()
+                                                .parallelStream()
+                                                .map(n -> {
+                                                    Hibernate.initialize(((Node) n).getComponents());
+                                                    return n;
+                                                }).collect(Collectors.toList());
     }
 
     @Override @Transactional

@@ -1,4 +1,4 @@
-package com.sergeev.controlpanel.model.dao;
+package com.sergeev.controlpanel.model.dao.node;
 
 import com.sergeev.controlpanel.model.Node;
 import org.hibernate.Hibernate;

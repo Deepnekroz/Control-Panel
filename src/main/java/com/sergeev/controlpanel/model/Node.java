@@ -3,9 +3,11 @@ package com.sergeev.controlpanel.model;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.sergeev.controlpanel.model.user.User;
 
 import javax.persistence.*;
 import java.net.InetAddress;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,6 +35,9 @@ public class Node {
 
     @ElementCollection(targetClass = Component.class)
     private Set<Component> components;
+
+    @ManyToMany(mappedBy = "nodeList")
+    private List<User> users;
 
     public Node() {
     }
@@ -92,6 +97,14 @@ public class Node {
     @JoinColumn(name = "id")
     public Set<Component> getComponents(){
         return components;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override

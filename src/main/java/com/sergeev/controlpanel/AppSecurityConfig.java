@@ -1,11 +1,17 @@
 package com.sergeev.controlpanel;
 
+import com.sergeev.controlpanel.utils.PasswordEncoderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Created by dmitry-sergeev on 21.09.15.
@@ -16,21 +22,33 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    @Qualifier("userDetailsService")
+    UserDetailsService userDetailsService;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
-        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("superadmin").password("superadmin").roles("SUPERADMIN");
+//        auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
+//        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+//        auth.inMemoryAuthentication().withUser("superadmin").password("superadmin").roles("SUPERADMIN");
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/admin**")
+                .access("hasRole('ROLE_ADMIN')").and().formLogin()
+                .loginPage("/login").failureUrl("/login?error")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .and().logout().logoutSuccessUrl("/login?logout")
+                .and().exceptionHandling().accessDeniedPage("/403")
+                .and().csrf().disable();
+    }
 
-        http.authorizeRequests()
-                .antMatchers("/admin**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/confidential**").access("hasRole('ROLE_SUPERADMIN')")
-                .and().formLogin().defaultSuccessUrl("/", false)
-                .and().csrf().disable(); //TODO need to configure RegExp matched as described here https://stackoverflow.com/questions/20602436/in-spring-security-with-java-config-why-does-httpbasic-post-want-csrf-token
-
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        PasswordEncoder encoder = new PasswordEncoderImpl();
+        return encoder;
     }
 
 }

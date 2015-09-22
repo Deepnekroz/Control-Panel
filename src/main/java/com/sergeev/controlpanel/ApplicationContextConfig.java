@@ -3,18 +3,17 @@ package com.sergeev.controlpanel;
 import com.sergeev.controlpanel.model.Component;
 import com.sergeev.controlpanel.model.ComponentType;
 import com.sergeev.controlpanel.model.Node;
-import com.sergeev.controlpanel.model.dao.NodeDaoImpl;
-import com.sergeev.controlpanel.model.dao.NodeDaoInterface;
+import com.sergeev.controlpanel.model.dao.node.NodeDaoImpl;
+import com.sergeev.controlpanel.model.dao.node.NodeDaoInterface;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.*;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
@@ -28,6 +27,7 @@ import java.util.Properties;
 @ComponentScan("com.sergeev.controlpanel")
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableWebMvc
 public class ApplicationContextConfig {
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
@@ -47,7 +47,7 @@ public class ApplicationContextConfig {
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 
         sessionBuilder.addAnnotatedClasses(Node.class, Component.class, ComponentType.class);
-        sessionBuilder.scanPackages("com.sergeev.controlpanel.model");
+        sessionBuilder.scanPackages("com.sergeev.controlpanel.model**");
         sessionBuilder.addProperties(getHibernateProperties());
         sessionBuilder.setProperty("hibernate.connection.CharSet", "utf8");
         sessionBuilder.setProperty("hibernate.connection.characterEncoding", "utf8");
@@ -85,7 +85,7 @@ public class ApplicationContextConfig {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.hbm2ddl.auto", "create");
         return properties;
     }
 }

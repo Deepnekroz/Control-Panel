@@ -73,38 +73,7 @@ public class MainController {
         return Utils.constructJsonAnswer(nodeDao.getAll());
     }
 
-    @RequestMapping(value = "/admin/user", method = RequestMethod.GET, params = {"username"})
-    @ResponseBody
-    public String getUser(Model model,
-                          @RequestParam(value = "username") String username){
-        LOG.debug("Received /admin/user for user={}...", username);
 
-        return Utils.constructJsonAnswer(userDao.findByUsername(username));
-    }
-
-    @RequestMapping(value = "/admin/user", method = RequestMethod.POST,
-                    params = {"username", "password", "role", "nodes"})
-    @ResponseBody
-    public ResponseEntity addUser(Model model,
-                          @RequestParam(value = "username") String username,
-                          @RequestParam(value = "password") String password,
-                          @RequestParam(value = "role") String role){
-        LOG.debug("Received /admin/user for user={}...", username);
-
-        User user = new User(username, new BCryptPasswordEncoder().encode(password), UserRole.valueOf(role), new ArrayList<>(), true);
-        userDao.persist(user);
-
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("status", "ok");
-        return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/admin*", method = RequestMethod.GET)
-    public String adminPage(Model model){
-        LOG.debug("Received /admin request...");
-        model.addAttribute("responseJson", "Restricted area!");
-        return "redirect:/admin/index.html";
-    }
 
     //Spring Security see this :
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -124,11 +93,6 @@ public class MainController {
 
         return model;
 
-    }
-
-    @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public String page403(){
-        return "403";
     }
 
 

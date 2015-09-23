@@ -26,24 +26,21 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
-//        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
-//        auth.inMemoryAuthentication().withUser("superadmin").password("superadmin").roles("SUPERADMIN");
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')").and()
-                .authorizeRequests().antMatchers("/admin/**")
-                .access("hasRole('ROLE_ADMIN')")
-
-                    .and().formLogin().loginPage("/login").failureUrl("/login?error").defaultSuccessUrl("/admin")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                    .and().logout().logoutSuccessUrl("/login?logout")
-                    .and().exceptionHandling().accessDeniedPage("/403")
-                .   and().csrf().disable(); //TODO we need csrf enabled! After enable it, need to test post request
+        http.authorizeRequests()
+                .antMatchers("/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+                .and()
+                    .authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .and().formLogin().loginPage("/login").failureUrl("/login?error").defaultSuccessUrl("/admin")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                .and().logout().logoutSuccessUrl("/login?logout")
+                .and().exceptionHandling().accessDeniedPage("/403")
+                .and().csrf().disable(); //TODO we need csrf enabled! After enable it, need to test post request
 
     }
 

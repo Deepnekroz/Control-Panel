@@ -56,7 +56,7 @@
                 <div class="left_col scroll-view">
 
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.jsp" class="site_title"><i class="fa fa-paw"></i> <span><%= Constants.APP_NAME %></span></a>
+                        <a href="/admin" class="site_title"><i class="fa fa-paw"></i> <span><%= Constants.APP_NAME %></span></a>
                     </div>
                     <div class="clearfix"></div>
 
@@ -82,9 +82,9 @@
                             <ul class="nav side-menu">
                                 <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="index.jsp">Dashboard</a>
+                                        <li><a href="/admin">Admin panel</a>
                                         </li>
-                                        <li><a href="../../../resources/admin/index2.html">Dashboard2</a>
+                                        <li><a href="../../../resources/admin/index2.html">User panel</a>
                                         </li>
                                         <li><a href="../../../resources/admin/index3.html">Dashboard3</a>
                                         </li>

@@ -97,7 +97,7 @@
     </div>
     <div id="register" class="animate form">
       <section class="login_content">
-        <form action="/user" method="post" id="register-form">
+        <form action="/adduser" method="post" id="register-form">
           <h1>Create Account</h1>
             <div style="display:none" id="register-alert" class="alert alert-danger col-sm-12">
                 <c:if test="${not empty param.error_register}">

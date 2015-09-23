@@ -44,7 +44,7 @@ public class UserController {
     private NodeDaoImpl nodeDao;
 
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST,
+    @RequestMapping(value = "/adduser", method = RequestMethod.POST,
             params = {"username", "password"})
     public ModelAndView addUser(  @RequestParam(value = "username") String username,
                                   @RequestParam(value = "password") String password){

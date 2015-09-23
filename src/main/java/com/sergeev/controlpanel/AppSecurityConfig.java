@@ -34,15 +34,17 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/admin/**")
+        http.authorizeRequests().antMatchers("/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')").and()
+                .authorizeRequests().antMatchers("/admin/**")
                 .access("hasRole('ROLE_ADMIN')")
-                    .and().authorizeRequests().antMatchers("/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+
                     .and().formLogin().loginPage("/login").failureUrl("/login?error").defaultSuccessUrl("/admin")
                 .usernameParameter("username")
                 .passwordParameter("password")
                     .and().logout().logoutSuccessUrl("/login?logout")
                     .and().exceptionHandling().accessDeniedPage("/403")
                 .   and().csrf().disable(); //TODO we need csrf enabled! After enable it, need to test post request
+
     }
 
     @Bean

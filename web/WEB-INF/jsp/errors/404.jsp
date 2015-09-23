@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.sergeev.controlpanel.utils.Constants" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,21 +10,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentallela Alela! | </title>
+    <title><%= Constants.APP_NAME %> | </title>
 
     <!-- Bootstrap core CSS -->
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../resources/admin/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="fonts/css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="../../../resources/admin/fonts/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../resources/admin/css/animate.min.css" rel="stylesheet">
 
     <!-- Custom styling plus plugins -->
-    <link href="css/custom.css" rel="stylesheet">
-    <link href="css/icheck/flat/green.css" rel="stylesheet">
+    <link href="../../../resources/admin/css/custom.css" rel="stylesheet">
+    <link href="../../../resources/admin/css/icheck/flat/green.css" rel="stylesheet">
 
 
-    <script src="js/jquery.min.js"></script>
+    <script src="../../../resources/admin/js/jquery.min.js"></script>
 
     <!--[if lt IE 9]>
         <script src="../assets/js/ie8-responsive-file-warning.js"></script>
@@ -51,19 +53,6 @@
                         <h2>Sorry but we couldnt find this page</h2>
                         <p>This page you are looking for does not exsist <a href="#">Report this?</a>
                         </p>
-                        <div class="mid_center">
-                            <h3>Search</h3>
-                            <form>
-                                <div class="col-xs-12 form-group pull-right top_search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search for...">
-                                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                        </span>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -80,17 +69,17 @@
         <div id="notif-group" class="tabbed_notifications"></div>
     </div>
 
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../../../resources/admin/js/bootstrap.min.js"></script>
 
     <!-- chart js -->
-    <script src="js/chartjs/chart.min.js"></script>
+    <script src="../../../resources/admin/js/chartjs/chart.min.js"></script>
     <!-- bootstrap progress js -->
-    <script src="js/progressbar/bootstrap-progressbar.min.js"></script>
-    <script src="js/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="../../../resources/admin/js/progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="../../../resources/admin/js/nicescroll/jquery.nicescroll.min.js"></script>
     <!-- icheck -->
-    <script src="js/icheck/icheck.min.js"></script>
+    <script src="../../../resources/admin/js/icheck/icheck.min.js"></script>
 
-    <script src="js/custom.js"></script>
+    <script src="../../../resources/admin/js/custom.js"></script>
 
     <!-- /footer content -->
 </body>

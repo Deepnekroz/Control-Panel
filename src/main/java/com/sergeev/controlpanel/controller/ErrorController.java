@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ErrorController {
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String page403(){
-        return "403";
+        return "errors/403";
     }
     @RequestMapping(value = "/404", method = RequestMethod.GET)
     public String page404(){
-        return "redirect:/admin/page_404.html";
+        return "errors/404";
     }
     @RequestMapping(value = "/500", method = RequestMethod.GET)
     public String page500(){
-        return "redirect:/admin/page_500.html";
+        return "errors/500";
     }
 }

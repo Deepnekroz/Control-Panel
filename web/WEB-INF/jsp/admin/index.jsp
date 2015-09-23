@@ -171,9 +171,9 @@
                                 </li>
                                 <li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="../../../resources/admin/page_404.html">404 Error</a>
+                                        <li><a href="../errors/404.jsp">404 Error</a>
                                         </li>
-                                        <li><a href="../../../resources/admin/page_500.html">500 Error</a>
+                                        <li><a href="../errors/500.jsp">500 Error</a>
                                         </li>
                                         <li><a href="../../../resources/admin/plain_page.html">Plain Page</a>
                                         </li>

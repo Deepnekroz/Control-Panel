@@ -79,4 +79,23 @@ public class AdminController {
 
         return Utils.constructJsonAnswer(nodeDao.findById(id));
     }
+
+    @RequestMapping(value = "/admin/user/permission", method = RequestMethod.POST,
+            params = {"username", "role"})
+    @ResponseBody
+    public ResponseEntity changePermission(@RequestParam(value = "username") String username,
+                                           @RequestParam(value = "role") String role){
+        LOG.debug("Received /admin/user/permission POST for user={}...", username);
+
+
+        User user = userDao.findByUsername(username);
+        user.setRole(UserRole.valueOf(role));
+        userDao.update(user);
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("status", "ok");
+        return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+    }
+
+
 }

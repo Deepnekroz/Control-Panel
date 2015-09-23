@@ -87,7 +87,7 @@
             <div>
               <h1><i class="fa fa-paw" style="font-size: 26px;"></i> <%= Constants.APP_NAME %></h1>
 
-              <p>©2015 All Rights Reserved. <%= Constants.APP_NAME %> is a *NIX servers GUI managment system.</p>
+              <p>2015 All Rights Reserved. <%= Constants.APP_NAME %> is a *NIX servers GUI managment system.</p>
             </div>
           </div>
         </form>
@@ -125,7 +125,7 @@
             <div>
               <h1><i class="fa fa-paw" style="font-size: 26px;"></i>  <%= Constants.APP_NAME %></h1>
 
-              <p>©2015 All Rights Reserved. <%= Constants.APP_NAME %> is a *NIX servers GUI managment system.</p>
+              <p>2015 All Rights Reserved. <%= Constants.APP_NAME %> is a *NIX servers GUI managment system.</p>
             </div>
           </div>
         </form>

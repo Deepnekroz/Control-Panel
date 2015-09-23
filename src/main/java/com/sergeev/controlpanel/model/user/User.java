@@ -1,6 +1,7 @@
 package com.sergeev.controlpanel.model.user;
 
 import com.google.gson.JsonObject;
+import com.sergeev.controlpanel.model.AbstractModel;
 import com.sergeev.controlpanel.model.Node;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends AbstractModel {
 
     @Id
     @GeneratedValue

@@ -7,7 +7,7 @@ import javax.persistence.*;
  * Example of class entities: DATABASE, MAINTAINER, etc
  */
 @Entity @Table(name = "component_type")
-public class ComponentType {
+public class ComponentType extends AbstractModel {
     @Id
     @GeneratedValue
     private long id;

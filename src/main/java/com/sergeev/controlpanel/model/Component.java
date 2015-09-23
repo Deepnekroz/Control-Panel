@@ -7,7 +7,7 @@ import javax.persistence.*;
  * Example: name = "MySQL 5.4.3", componentType = "DATABASE"
  */
 @Entity @Table(name = "components")
-public class Component {
+public class Component extends AbstractModel {
 
     @Id
     @GeneratedValue

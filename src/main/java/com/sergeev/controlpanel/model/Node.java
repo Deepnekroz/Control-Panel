@@ -7,6 +7,8 @@ import com.sergeev.controlpanel.model.user.User;
 
 import javax.persistence.*;
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +17,7 @@ import java.util.Set;
  */
 
 @Entity(name = "Node") @Table(name = "nodes")
-public class Node {
+public class Node extends AbstractModel{
 
     @Id @GeneratedValue
     @Column(name = "id")
@@ -47,6 +49,7 @@ public class Node {
         this.inetAddress = inetAddress;
         this.osName = osName;
         this.osVersion = osVersion;
+        users = new ArrayList<>();
     }
 
     public long getId() {
@@ -105,6 +108,12 @@ public class Node {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<User> addUser(User user){
+        if(!users.contains(user))
+            users.add(user);
+        return users;
     }
 
     @Override

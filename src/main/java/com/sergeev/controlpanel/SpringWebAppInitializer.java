@@ -14,7 +14,6 @@ import javax.servlet.ServletRegistration;
 
 public class SpringWebAppInitializer implements WebApplicationInitializer {
 
-
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();

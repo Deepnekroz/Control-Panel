@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 /**
@@ -28,10 +29,12 @@ public class AdminController {
     @Autowired
     private UserDaoImpl userDao;
 
+    @Autowired
+    private NodeDaoImpl nodeDao;
+
     @RequestMapping(value = "/admin/user/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public String getUser(Model model,
-                          @PathVariable(value = "username") String username){
+    public String getUser(@PathVariable(value = "username") String username){
         LOG.debug("Received /admin/user GET for user={}...", username);
 
         return Utils.constructJsonAnswer(userDao.findByUsername(username));
@@ -40,8 +43,7 @@ public class AdminController {
     @RequestMapping(value = "/admin/user", method = RequestMethod.POST,
             params = {"username", "password", "role"})
     @ResponseBody
-    public ResponseEntity addUser(Model model,
-                                  @RequestParam(value = "username") String username,
+    public ResponseEntity addUser(@RequestParam(value = "username") String username,
                                   @RequestParam(value = "password") String password,
                                   @RequestParam(value = "role") String role){
         LOG.debug("Received /admin/user POST for user={}...", username);
@@ -59,5 +61,22 @@ public class AdminController {
         LOG.debug("Received /admin request...");
         model.addAttribute("responseJson", "Restricted area!");
         return "/admin/index";
+    }
+
+    @RequestMapping(value = "/admin/nodes", method = RequestMethod.GET)
+    @ResponseBody
+    public String getNodes() throws UnknownHostException {
+        LOG.debug("Received /admin/nodes GET request");
+
+        return Utils.constructJsonAnswer(nodeDao.getAll());
+    }
+
+    @RequestMapping(value = "/admin/node/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getNode(@PathVariable(value = "id") Long id)
+            throws UnknownHostException{
+        LOG.debug("Received /admin/node/ GET request for id {}...", id);
+
+        return Utils.constructJsonAnswer(nodeDao.findById(id));
     }
 }

@@ -4,11 +4,7 @@
     <title></title>
   </head>
   <body>
-  ${responseJson}
-  <script>
-      var a = ${responseJson};
-      alert(a["parameter"]);
-  </script>
+  Welcome, ${pageContext.request.userPrincipal.name}
 
 
 

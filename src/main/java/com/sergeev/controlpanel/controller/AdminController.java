@@ -32,19 +32,19 @@ public class AdminController {
     @ResponseBody
     public String getUser(Model model,
                           @PathVariable(value = "username") String username){
-        LOG.debug("Received /admin/user for user={}...", username);
+        LOG.debug("Received /admin/user GET for user={}...", username);
 
         return Utils.constructJsonAnswer(userDao.findByUsername(username));
     }
 
     @RequestMapping(value = "/admin/user", method = RequestMethod.POST,
-            params = {"username", "password", "role", "nodes"})
+            params = {"username", "password", "role"})
     @ResponseBody
     public ResponseEntity addUser(Model model,
                                   @RequestParam(value = "username") String username,
                                   @RequestParam(value = "password") String password,
                                   @RequestParam(value = "role") String role){
-        LOG.debug("Received /admin/user for user={}...", username);
+        LOG.debug("Received /admin/user POST for user={}...", username);
 
         User user = new User(username, new BCryptPasswordEncoder().encode(password), UserRole.valueOf(role), new ArrayList<>(), true);
         userDao.persist(user);
@@ -58,6 +58,6 @@ public class AdminController {
     public String adminPage(Model model){
         LOG.debug("Received /admin request...");
         model.addAttribute("responseJson", "Restricted area!");
-        return "redirect:/admin/index.html";
+        return "/admin/index";
     }
 }

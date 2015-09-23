@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by dmitry-sergeev on 02.09.15.
@@ -68,18 +71,18 @@ public class MainController {
     @RequestMapping(value = "/nodes", method = RequestMethod.GET)
     @ResponseBody
     public String getNodes(Model model) throws UnknownHostException{
-        LOG.debug("Received /nodes GET request for");
+        LOG.debug("Received /nodes GET request");
 
         return Utils.constructJsonAnswer(nodeDao.getAll());
     }
-
 
 
     //Spring Security see this :
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(
             @RequestParam(value = "error", required = false) String error,
-            @RequestParam(value = "logout", required = false) String logout) {
+            @RequestParam(value = "logout", required = false) String logout,
+            @RequestParam(value = "registered", required = false) String registered) {
 
         ModelAndView model = new ModelAndView();
         if (error != null) {
@@ -88,6 +91,10 @@ public class MainController {
 
         if (logout != null) {
             model.addObject("msg", "You've been logged out successfully.");
+        }
+
+        if (registered != null) {
+            model.addObject("registered", registered);
         }
         model.setViewName("login");
 

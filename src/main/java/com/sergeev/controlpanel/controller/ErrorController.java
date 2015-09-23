@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ErrorController {
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String page403(){
-        return "redirect:/admin/page_403.html";
+        return "403";
     }
     @RequestMapping(value = "/404", method = RequestMethod.GET)
     public String page404(){

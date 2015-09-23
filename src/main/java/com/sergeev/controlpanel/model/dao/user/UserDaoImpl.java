@@ -56,7 +56,8 @@ public class UserDaoImpl implements UserDaoInterface<User, Long> {
     public User findByUsername(String username) {
         List<User> users = getCurrentSession().createQuery("from User where name=?").setParameter(0, username).list();
         LOG.debug("Users with name: " + username + Arrays.toString(users.toArray()));
-
+        if(users.size()<1)
+            return null;
         User user = users.get(0);
         if(user!=null)
             Hibernate.initialize(user.getNodeList()); //'cause of Lazy initialization we need to do it manually

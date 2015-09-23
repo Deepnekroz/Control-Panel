@@ -1,130 +1,138 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.sergeev.controlpanel.utils.Constants" %>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Access is denied</title>
-  <!-- Bootstrap -->
+
+  <title><%= Constants.APP_NAME %> | </title>
+
+  <!-- Bootstrap core CSS -->
+
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.min.js"></script>
+
+  <link href="fonts/css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/animate.min.css" rel="stylesheet">
+
+  <!-- Custom styling plus plugins -->
+  <link href="css/custom.css" rel="stylesheet">
+  <link href="css/icheck/flat/green.css" rel="stylesheet">
+
+
+  <script src="js/jquery.min.js"></script>
+
+  <!--[if lt IE 9]>
+  <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+  <![endif]-->
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+    <script>
+        $('#login-form').on('submit',function(){ console.log('login-form'); });
+        $('#register-form').on('submit',function(){ console.log('register-form'); });
+        console.log('test');
+    </script>
 </head>
-<body>
+<body style="background:#F7F7F7;">
 
-<div class="container">
-  <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-    <div class="panel panel-info" >
-      <div class="panel-heading">
-        <div class="panel-title">Sign In</div>
-        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
-      </div>
+<div class="">
+  <a class="hiddenanchor" id="toregister"></a>
+  <a class="hiddenanchor" id="tologin"></a>
 
-      <div style="padding-top:30px" class="panel-body" >
+  <div id="wrapper">
+    <div id="login" class="animate form">
+      <section class="login_content">
 
-
-
-        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12">
-          <c:if test="${not empty error}">
-            <script>$("#login-alert").show()</script>
-            <div class="error">${error}</div>
-          </c:if>
-          <c:if test="${not empty msg}">
-            <script>$("#login-alert").show()</script>
-            <div class="msg">${msg}</div>
-          </c:if>
-        </div>
-
-        <form id="loginform" class="form-horizontal" role="form" th:action="@{/login}" method="post">
-
-          <div style="margin-bottom: 25px" class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="username or email">
-          </div>
-
-          <div style="margin-bottom: 25px" class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
-          </div>
-
-
-          <div style="margin-top:10px; text-align:right;" class="form-group">
-            <div class="col-sm-12 controls">
-              <button id="btn-login" class="btn btn-success" type="submit">Login</button>
+        <form th:action="@{/login}" method="post" id="login-form">
+          <h1>Login Form</h1>
+            <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12">
+                <c:if test="${not empty error}">
+                    <script>$("#login-alert").show()</script>
+                    <div class="error">${error}</div>
+                </c:if>
+                <c:if test="${not empty msg}">
+                    <script>$("#login-alert").show()</script>
+                    <div class="msg">${msg}</div>
+                </c:if>
+                <c:if test="${not empty registered}">
+                    <script>$("#login-alert").removeClass("alert-danger").addClass("alert-success").show()</script>
+                    <div class="msg">${registered}</div>
+                </c:if>
             </div>
+          <div>
+            <input type="text" class="form-control" placeholder="Username" required="" name="username"  />
           </div>
+          <div>
+            <input type="password" class="form-control" placeholder="Password" required="" name="password" />
+          </div>
+          <div>
+            <button class="btn btn-default submit" type="submit" form="login-form">Log in</button>
+            <a class="reset_pass" href="#">Lost your password?</a>
+          </div>
+          <div class="clearfix"></div>
+          <div class="separator">
 
+            <p class="change_link">New to site?
+              <a href="#toregister" class="to_register"> Create Account </a>
+            </p>
+            <div class="clearfix"></div>
+            <br />
+            <div>
+              <h1><i class="fa fa-paw" style="font-size: 26px;"></i> <%= Constants.APP_NAME %></h1>
 
-          <div class="form-group">
-            <div class="col-md-12 control">
-              <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-                Don't have an account!
-                <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
-                  Sign Up Here
-                </a>
-              </div>
+              <p>©2015 All Rights Reserved. <%= Constants.APP_NAME %> is a *NIX servers GUI managment system.</p>
             </div>
           </div>
         </form>
-
-
-
-      </div>
+        <!-- form -->
+      </section>
+      <!-- content -->
     </div>
-  </div>
-  <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <div class="panel-title">Sign Up</div>
-        <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign In</a></div>
-      </div>
-      <div class="panel-body" >
-        <form id="signupform" class="form-horizontal" role="form">
-
-          <div id="signupalert" style="display:none" class="alert alert-danger">
-            <p>Error:</p>
-            <span></span>
+    <div id="register" class="animate form">
+      <section class="login_content">
+        <form action="/user" method="post" id="register-form">
+          <h1>Create Account</h1>
+            <div style="display:none" id="register-alert" class="alert alert-danger col-sm-12">
+                <c:if test="${not empty param.error_register}">
+                    <script>$("#register-alert").show()</script>
+                    <div class="error">${param.error_register}</div>
+                </c:if>
+            </div>
+          <div>
+            <input type="text" class="form-control" placeholder="Username" required="" name="username" />
           </div>
+          <div>
+            <input type="password" class="form-control" placeholder="Password" required="" name="password" />
+          </div>
+          <div>
+            <button class="btn btn-default submit" type="submit" form="register-form">Submit</button>
+          </div>
+          <div class="clearfix"></div>
+          <div class="separator">
 
+            <p class="change_link">Already a member ?
+              <a href="#tologin" class="to_register"> Log in </a>
+            </p>
+            <div class="clearfix"></div>
+            <br />
+            <div>
+              <h1><i class="fa fa-paw" style="font-size: 26px;"></i>  <%= Constants.APP_NAME %></h1>
 
-
-          <div class="form-group">
-            <label for="username" class="col-md-3 control-label">Username</label>
-            <div class="col-md-9">
-              <input type="text" class="form-control" name="username" placeholder="Username">
+              <p>©2015 All Rights Reserved. <%= Constants.APP_NAME %> is a *NIX servers GUI managment system.</p>
             </div>
           </div>
-          <div class="form-group">
-            <label for="password" class="col-md-3 control-label">Password</label>
-            <div class="col-md-9">
-              <input type="password" class="form-control" name="passwd" placeholder="Password">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <!-- Button -->
-            <div class="col-md-offset-3 col-md-9">
-              <button id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Sign Up</button>
-              <span style="margin-left:8px;">or</span>
-            </div>
-          </div>
-
-          <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group">
-
-          </div>
-
-
-
         </form>
-      </div>
+        <!-- form -->
+      </section>
+      <!-- content -->
     </div>
-
-
-
-
   </div>
 </div>
 

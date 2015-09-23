@@ -1,3 +1,6 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.sergeev.controlpanel.utils.Constants" %>
+<%@page session="true"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,23 +11,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentallela Alela! | </title>
+    <title><%= Constants.APP_NAME %> | </title>
 
     <!-- Bootstrap core CSS -->
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../resources/admin/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="fonts/css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="../../../resources/admin/fonts/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../resources/admin/css/animate.min.css" rel="stylesheet">
 
     <!-- Custom styling plus plugins -->
-    <link href="css/custom.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/maps/jquery-jvectormap-2.0.1.css" />
-    <link href="css/icheck/flat/green.css" rel="stylesheet" />
-    <link href="css/floatexamples.css" rel="stylesheet" type="text/css" />
+    <link href="../../../resources/admin/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../../resources/admin/css/maps/jquery-jvectormap-2.0.1.css" />
+    <link href="../../../resources/admin/css/icheck/flat/green.css" rel="stylesheet" />
+    <link href="../../../resources/admin/css/floatexamples.css" rel="stylesheet" type="text/css" />
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/nprogress.js"></script>
+    <script src="../../../resources/admin/js/jquery.min.js"></script>
+    <script src="../../../resources/admin/js/nprogress.js"></script>
     <script>
         NProgress.start();
     </script>
@@ -53,18 +56,18 @@
                 <div class="left_col scroll-view">
 
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Alela!</span></a>
+                        <a href="index.jsp" class="site_title"><i class="fa fa-paw"></i> <span><%= Constants.APP_NAME %></span></a>
                     </div>
                     <div class="clearfix"></div>
 
                     <!-- menu prile quick info -->
                     <div class="profile">
                         <div class="profile_pic">
-                            <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                            <img src="../../../resources/admin/images/img.jpg" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>Anthony Fernando</h2>
+                            <h2>${pageContext.request.userPrincipal.name}</h2>
                         </div>
                     </div>
                     <!-- /menu prile quick info -->
@@ -79,71 +82,71 @@
                             <ul class="nav side-menu">
                                 <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="index.html">Dashboard</a>
+                                        <li><a href="index.jsp">Dashboard</a>
                                         </li>
-                                        <li><a href="index2.html">Dashboard2</a>
+                                        <li><a href="../../../resources/admin/index2.html">Dashboard2</a>
                                         </li>
-                                        <li><a href="index3.html">Dashboard3</a>
+                                        <li><a href="../../../resources/admin/index3.html">Dashboard3</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="form.html">General Form</a>
+                                        <li><a href="../../../resources/admin/form.html">General Form</a>
                                         </li>
-                                        <li><a href="form_advanced.html">Advanced Components</a>
+                                        <li><a href="../../../resources/admin/form_advanced.html">Advanced Components</a>
                                         </li>
-                                        <li><a href="form_validation.html">Form Validation</a>
+                                        <li><a href="../../../resources/admin/form_validation.html">Form Validation</a>
                                         </li>
-                                        <li><a href="form_wizards.html">Form Wizard</a>
+                                        <li><a href="../../../resources/admin/form_wizards.html">Form Wizard</a>
                                         </li>
-                                        <li><a href="form_upload.html">Form Upload</a>
+                                        <li><a href="../../../resources/admin/form_upload.html">Form Upload</a>
                                         </li>
-                                        <li><a href="form_buttons.html">Form Buttons</a>
+                                        <li><a href="../../../resources/admin/form_buttons.html">Form Buttons</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="general_elements.html">General Elements</a>
+                                        <li><a href="../../../resources/admin/general_elements.html">General Elements</a>
                                         </li>
-                                        <li><a href="media_gallery.html">Media Gallery</a>
+                                        <li><a href="../../../resources/admin/media_gallery.html">Media Gallery</a>
                                         </li>
-                                        <li><a href="typography.html">Typography</a>
+                                        <li><a href="../../../resources/admin/typography.html">Typography</a>
                                         </li>
-                                        <li><a href="icons.html">Icons</a>
+                                        <li><a href="../../../resources/admin/icons.html">Icons</a>
                                         </li>
-                                        <li><a href="glyphicons.html">Glyphicons</a>
+                                        <li><a href="../../../resources/admin/glyphicons.html">Glyphicons</a>
                                         </li>
-                                        <li><a href="widgets.html">Widgets</a>
+                                        <li><a href="../../../resources/admin/widgets.html">Widgets</a>
                                         </li>
-                                        <li><a href="invoice.html">Invoice</a>
+                                        <li><a href="../../../resources/admin/invoice.html">Invoice</a>
                                         </li>
-                                        <li><a href="inbox.html">Inbox</a>
+                                        <li><a href="../../../resources/admin/inbox.html">Inbox</a>
                                         </li>
-                                        <li><a href="calender.html">Calender</a>
+                                        <li><a href="../../../resources/admin/calender.html">Calender</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="tables.html">Tables</a>
+                                        <li><a href="../../../resources/admin/tables.html">Tables</a>
                                         </li>
-                                        <li><a href="tables_dynamic.html">Table Dynamic</a>
+                                        <li><a href="../../../resources/admin/tables_dynamic.html">Table Dynamic</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="chartjs.html">Chart JS</a>
+                                        <li><a href="../../../resources/admin/chartjs.html">Chart JS</a>
                                         </li>
-                                        <li><a href="chartjs2.html">Chart JS2</a>
+                                        <li><a href="../../../resources/admin/chartjs2.html">Chart JS2</a>
                                         </li>
-                                        <li><a href="morisjs.html">Moris JS</a>
+                                        <li><a href="../../../resources/admin/morisjs.html">Moris JS</a>
                                         </li>
-                                        <li><a href="echarts.html">ECharts </a>
+                                        <li><a href="../../../resources/admin/echarts.html">ECharts </a>
                                         </li>
-                                        <li><a href="other_charts.html">Other Charts </a>
+                                        <li><a href="../../../resources/admin/other_charts.html">Other Charts </a>
                                         </li>
                                     </ul>
                                 </li>
@@ -154,29 +157,29 @@
                             <ul class="nav side-menu">
                                 <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="e_commerce.html">E-commerce</a>
+                                        <li><a href="../../../resources/admin/e_commerce.html">E-commerce</a>
                                         </li>
-                                        <li><a href="projects.html">Projects</a>
+                                        <li><a href="../../../resources/admin/projects.html">Projects</a>
                                         </li>
-                                        <li><a href="project_detail.html">Project Detail</a>
+                                        <li><a href="../../../resources/admin/project_detail.html">Project Detail</a>
                                         </li>
-                                        <li><a href="contacts.html">Contacts</a>
+                                        <li><a href="../../../resources/admin/contacts.html">Contacts</a>
                                         </li>
-                                        <li><a href="profile.html">Profile</a>
+                                        <li><a href="../../../resources/admin/profile.html">Profile</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="page_404.html">404 Error</a>
+                                        <li><a href="../../../resources/admin/page_404.html">404 Error</a>
                                         </li>
-                                        <li><a href="page_500.html">500 Error</a>
+                                        <li><a href="../../../resources/admin/page_500.html">500 Error</a>
                                         </li>
-                                        <li><a href="plain_page.html">Plain Page</a>
+                                        <li><a href="../../../resources/admin/plain_page.html">Plain Page</a>
                                         </li>
-                                        <li><a href="login.html">Login Page</a>
+                                        <li><a href="../../../resources/admin/login.html">Login Page</a>
                                         </li>
-                                        <li><a href="pricing_tables.html">Pricing Tables</a>
+                                        <li><a href="../../../resources/admin/pricing_tables.html">Pricing Tables</a>
                                         </li>
 
                                     </ul>
@@ -220,7 +223,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="images/img.jpg" alt="">John Doe
+                                    <img src="../../../resources/admin/images/img.jpg" alt="">${pageContext.request.userPrincipal.name}
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
@@ -235,7 +238,7 @@
                                     <li>
                                         <a href="javascript:;">Help</a>
                                     </li>
-                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    <li><a href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                     </li>
                                 </ul>
                             </li>
@@ -249,7 +252,7 @@
                                     <li>
                                         <a>
                                             <span class="image">
-                                        <img src="images/img.jpg" alt="Profile Image" />
+                                        <img src="../../../resources/admin/images/img.jpg" alt="Profile Image" />
                                     </span>
                                             <span>
                                         <span>John Smith</span>
@@ -263,7 +266,7 @@
                                     <li>
                                         <a>
                                             <span class="image">
-                                        <img src="images/img.jpg" alt="Profile Image" />
+                                        <img src="../../../resources/admin/images/img.jpg" alt="Profile Image" />
                                     </span>
                                             <span>
                                         <span>John Smith</span>
@@ -277,7 +280,7 @@
                                     <li>
                                         <a>
                                             <span class="image">
-                                        <img src="images/img.jpg" alt="Profile Image" />
+                                        <img src="../../../resources/admin/images/img.jpg" alt="Profile Image" />
                                     </span>
                                             <span>
                                         <span>John Smith</span>
@@ -291,7 +294,7 @@
                                     <li>
                                         <a>
                                             <span class="image">
-                                        <img src="images/img.jpg" alt="Profile Image" />
+                                        <img src="../../../resources/admin/images/img.jpg" alt="Profile Image" />
                                     </span>
                                             <span>
                                         <span>John Smith</span>
@@ -305,7 +308,7 @@
                                     <li>
                                         <div class="text-center">
                                             <a>
-                                                <strong><a href="inbox.html">See All Alerts</strong>
+                                                <strong><a href="../../../resources/admin/inbox.html">See All Alerts</strong>
                                                 <i class="fa fa-angle-right"></i>
                                             </a>
                                         </div>
@@ -1074,8 +1077,8 @@
 
                 <footer>
                     <div class="">
-                        <p class="pull-right">Gentelella Alela! a Bootstrap 3 template by <a>Kimlabs</a>. |
-                            <span class="lead"> <i class="fa fa-paw"></i> Gentelella Alela!</span>
+                        <p class="pull-right"><%= Constants.APP_NAME %> is a *NIX servers GUI managment system.|
+                            <span class="lead"> <i class="fa fa-paw"></i> <%= Constants.APP_NAME %></span>
                         </p>
                     </div>
                     <div class="clearfix"></div>
@@ -1095,35 +1098,35 @@
         <div id="notif-group" class="tabbed_notifications"></div>
     </div>
 
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../../../resources/admin/js/bootstrap.min.js"></script>
 
     <!-- gauge js -->
-    <script type="text/javascript" src="js/gauge/gauge.min.js"></script>
-    <script type="text/javascript" src="js/gauge/gauge_demo.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/gauge/gauge.min.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/gauge/gauge_demo.js"></script>
     <!-- chart js -->
-    <script src="js/chartjs/chart.min.js"></script>
+    <script src="../../../resources/admin/js/chartjs/chart.min.js"></script>
     <!-- bootstrap progress js -->
-    <script src="js/progressbar/bootstrap-progressbar.min.js"></script>
-    <script src="js/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="../../../resources/admin/js/progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="../../../resources/admin/js/nicescroll/jquery.nicescroll.min.js"></script>
     <!-- icheck -->
-    <script src="js/icheck/icheck.min.js"></script>
+    <script src="../../../resources/admin/js/icheck/icheck.min.js"></script>
     <!-- daterangepicker -->
-    <script type="text/javascript" src="js/moment.min.js"></script>
-    <script type="text/javascript" src="js/datepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/moment.min.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/datepicker/daterangepicker.js"></script>
 
-    <script src="js/custom.js"></script>
+    <script src="../../../resources/admin/js/custom.js"></script>
 
     <!-- flot js -->
     <!--[if lte IE 8]><script type="text/javascript" src="js/excanvas.min.js"></script><![endif]-->
-    <script type="text/javascript" src="js/flot/jquery.flot.js"></script>
-    <script type="text/javascript" src="js/flot/jquery.flot.pie.js"></script>
-    <script type="text/javascript" src="js/flot/jquery.flot.orderBars.js"></script>
-    <script type="text/javascript" src="js/flot/jquery.flot.time.min.js"></script>
-    <script type="text/javascript" src="js/flot/date.js"></script>
-    <script type="text/javascript" src="js/flot/jquery.flot.spline.js"></script>
-    <script type="text/javascript" src="js/flot/jquery.flot.stack.js"></script>
-    <script type="text/javascript" src="js/flot/curvedLines.js"></script>
-    <script type="text/javascript" src="js/flot/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/flot/jquery.flot.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/flot/jquery.flot.pie.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/flot/jquery.flot.orderBars.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/flot/jquery.flot.time.min.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/flot/date.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/flot/jquery.flot.spline.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/flot/jquery.flot.stack.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/flot/curvedLines.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/flot/jquery.flot.resize.js"></script>
     <script>
         $(document).ready(function () {
             // [17, 74, 6, 39, 20, 85, 7]
@@ -1186,10 +1189,10 @@
     </script>
 
     <!-- worldmap -->
-    <script type="text/javascript" src="js/maps/jquery-jvectormap-2.0.1.min.js"></script>
-    <script type="text/javascript" src="js/maps/gdp-data.js"></script>
-    <script type="text/javascript" src="js/maps/jquery-jvectormap-world-mill-en.js"></script>
-    <script type="text/javascript" src="js/maps/jquery-jvectormap-us-aea-en.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/maps/jquery-jvectormap-2.0.1.min.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/maps/gdp-data.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/maps/jquery-jvectormap-world-mill-en.js"></script>
+    <script type="text/javascript" src="../../../resources/admin/js/maps/jquery-jvectormap-us-aea-en.js"></script>
     <script>
         $(function () {
             $('#world-map-gdp').vectorMap({
@@ -1210,7 +1213,7 @@
         });
     </script>
     <!-- skycons -->
-    <script src="js/skycons/skycons.js"></script>
+    <script src="../../../resources/admin/js/skycons/skycons.js"></script>
     <script>
         var icons = new Skycons({
                 "color": "#73879C"

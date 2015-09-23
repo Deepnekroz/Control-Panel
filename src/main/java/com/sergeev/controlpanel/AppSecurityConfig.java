@@ -41,7 +41,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .and().logout().logoutSuccessUrl("/login?logout")
                 .and().exceptionHandling().accessDeniedPage("/403")
-                .and().csrf().disable(); //TODO we need csrf enabled! After enable it, need to test POST request
+                .and().csrf().disable(); //TODO we need csrf enabled! After enable it, need to test post request
     }
 
     @Bean

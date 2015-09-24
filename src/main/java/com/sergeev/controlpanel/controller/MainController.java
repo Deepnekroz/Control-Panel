@@ -25,6 +25,11 @@ public class MainController {
 
     private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(MainController.class);
 
+    @RequestMapping(value = "/" , method = RequestMethod.GET)
+    public String main(){
+        return "redirect:/login";
+    }
+
     //Spring Security see this :
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(
@@ -47,7 +52,6 @@ public class MainController {
         model.setViewName("login");
 
         return model;
-
     }
 
 

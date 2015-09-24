@@ -19,8 +19,8 @@ import java.util.Set;
 @Entity(name = "Node") @Table(name = "nodes")
 public class Node extends AbstractModel{
 
-    @Id @GeneratedValue
-    @Column(name = "id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private long id;
 
     @Column(name = "name")
@@ -38,7 +38,7 @@ public class Node extends AbstractModel{
     @ElementCollection(targetClass = Component.class)
     private Set<Component> components;
 
-    @ManyToMany(mappedBy = "nodeList")
+    @ManyToMany(mappedBy = "nodeList", cascade = CascadeType.ALL)
     private List<User> users;
 
     public Node() {
@@ -101,6 +101,12 @@ public class Node extends AbstractModel{
     public Set<Component> getComponents(){
         return components;
     }
+
+    public Set<Component> addComponent(Component component){
+        components.add(component);
+        return components;
+    }
+
 
     public List<User> getUsers() {
         return users;

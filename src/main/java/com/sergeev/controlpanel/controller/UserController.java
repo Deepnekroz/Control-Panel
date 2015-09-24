@@ -1,6 +1,8 @@
 package com.sergeev.controlpanel.controller;
 
 import com.google.gson.JsonObject;
+import com.sergeev.controlpanel.model.Component;
+import com.sergeev.controlpanel.model.ComponentType;
 import com.sergeev.controlpanel.model.Node;
 import com.sergeev.controlpanel.model.dao.node.NodeDaoImpl;
 import com.sergeev.controlpanel.model.dao.user.UserDaoImpl;
@@ -17,10 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -28,6 +27,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by dmitry-sergeev on 23.09.15.
@@ -92,6 +92,7 @@ public class UserController {
         String username = auth.getName(); //get logged in username
 
         User user = userDao.findByUsername(username);
+        LOG.debug("Nodes size: " + user.getNodeList().size());
 
         return Utils.constructJsonAnswer(user.getNodeList());
     }
@@ -111,12 +112,25 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         node.addUser(userDao.findByUsername(username));
+        LOG.debug("User: " + node.getUsers().get(0));
 
         nodeDao.persist(node);
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("status", "ok");
+        return Utils.status(200);
+    }
 
-        return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+    @RequestMapping(value = "/user/node/{id}/component", method = RequestMethod.POST,
+                    params = {"name", "install_command", "component_type"})
+    @ResponseBody
+    public ResponseEntity addComponentToNode(@PathVariable(value = "id") Long id,
+                                             @RequestParam("name")  String name,
+                                             @RequestParam("install_command")  String installCommand,
+                                             @RequestParam("component_type")  String component_type){
+        Node node = nodeDao.findById(id);
+        if(node == null || node.getId() < 0)
+            return Utils.status(400);
+        node.addComponent(new Component(name, installCommand, new ComponentType(component_type)));
+        nodeDao.update(node);
+        return Utils.status(200);
     }
 }

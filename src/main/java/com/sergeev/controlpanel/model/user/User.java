@@ -3,6 +3,7 @@ package com.sergeev.controlpanel.model.user;
 import com.google.gson.JsonObject;
 import com.sergeev.controlpanel.model.AbstractModel;
 import com.sergeev.controlpanel.model.Node;
+import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,8 +15,8 @@ import java.util.List;
 @Table(name = "users")
 public class User extends AbstractModel {
 
-    @Id
-    @GeneratedValue
+    @Id @Column(nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "name", unique = true)
@@ -27,8 +28,10 @@ public class User extends AbstractModel {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "USER_NODES")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_nodes",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "node_id")})
     private List<Node> nodeList;
 
     @Column(name = "enabled", nullable = false)

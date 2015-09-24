@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sergeev.controlpanel.model.AbstractModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.*;
 
@@ -26,5 +28,10 @@ public class Utils {
         return jsonObject.toString();
     }
 
+    public static ResponseEntity status(int status){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("status", HttpStatus.valueOf(status).name());
+        return new ResponseEntity<>(jsonObject.toString(), HttpStatus.valueOf(status));
+    }
 
 }

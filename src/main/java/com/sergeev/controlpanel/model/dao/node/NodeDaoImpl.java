@@ -59,7 +59,9 @@ public class NodeDaoImpl implements NodeDaoInterface<Node, Long> {
                                                 .list()
                                                 .parallelStream()
                                                 .map(n -> {
-                                                    Hibernate.initialize(((Node) n).getComponents());
+                                                    Node node = (Node) n;
+                                                    Hibernate.initialize(node.getComponents());
+                                                    Hibernate.initialize(node.getUsers());
                                                     return n;
                                                 }).collect(Collectors.toList());
     }

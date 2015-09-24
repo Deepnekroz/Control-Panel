@@ -34,6 +34,10 @@ public class ComponentType extends AbstractModel {
     public ComponentType() {
     }
 
+    public ComponentType(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

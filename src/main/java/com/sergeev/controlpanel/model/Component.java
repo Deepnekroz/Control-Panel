@@ -16,9 +16,64 @@ public class Component extends AbstractModel {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "install_command")
+    private String installCommand;
+
     @OneToOne(fetch = FetchType.LAZY, targetEntity = ComponentType.class)
     private ComponentType componentType;
 
+
     public Component() {
+    }
+
+    public Component(String name, String installCommand, ComponentType componentType) {
+        this.name = name;
+        this.installCommand = installCommand;
+        this.componentType = componentType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getInstallCommand() {
+        return installCommand;
+    }
+
+    public void setInstallCommand(String installCommand) {
+        this.installCommand = installCommand;
+    }
+
+    public ComponentType getComponentType() {
+        return componentType;
+    }
+
+    public void setComponentType(ComponentType componentType) {
+        this.componentType = componentType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Component component = (Component) o;
+
+        if (name != null ? !name.equals(component.name) : component.name != null) return false;
+        if (installCommand != null ? !installCommand.equals(component.installCommand) : component.installCommand != null) return false;
+        return !(componentType != null ? !componentType.equals(component.componentType) : component.componentType != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (installCommand != null ? installCommand.hashCode() : 0);
+        result = 31 * result + (componentType != null ? componentType.hashCode() : 0);
+        return result;
     }
 }

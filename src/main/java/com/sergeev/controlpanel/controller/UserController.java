@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 import com.sergeev.controlpanel.model.Component;
 import com.sergeev.controlpanel.model.ComponentType;
 import com.sergeev.controlpanel.model.Node;
+import com.sergeev.controlpanel.model.dao.component.ComponentDaoImpl;
+import com.sergeev.controlpanel.model.dao.component.ComponentDaoInterface;
 import com.sergeev.controlpanel.model.dao.node.NodeDaoImpl;
 import com.sergeev.controlpanel.model.dao.user.UserDaoImpl;
 import com.sergeev.controlpanel.model.user.User;
@@ -40,6 +42,9 @@ public class UserController {
 
     @Autowired
     private NodeDaoImpl nodeDao;
+
+    @Autowired
+    private ComponentDaoInterface componentDao;
 
 
     @RequestMapping(value = "/adduser", method = RequestMethod.POST,
@@ -138,7 +143,10 @@ public class UserController {
         Node node = nodeDao.findById(id);
         if(node == null || node.getId() < 0)
             return Utils.status(400);
-        node.addComponent(new Component(name, installCommand, new ComponentType(component_type)));
+        Component component = new Component(name, installCommand, new ComponentType(component_type));
+        component.setNode(node);
+        componentDao.persist(component);
+        node.addComponent(component);
         nodeDao.update(node);
         return Utils.status(200);
     }

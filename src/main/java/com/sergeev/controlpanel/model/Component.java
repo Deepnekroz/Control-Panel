@@ -21,10 +21,10 @@ public class Component extends AbstractModel {
 
     @ManyToOne
     @JoinColumn(name = "node_id", nullable = false)
-    private Node node;
+    private Node node = null;
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = ComponentType.class)
-    private ComponentType componentType;
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = ComponentType.class, cascade = CascadeType.ALL)
+    private ComponentType componentType = null;
 
 
     public Component() {

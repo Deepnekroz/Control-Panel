@@ -100,6 +100,7 @@ public class Node extends AbstractModel{
 
     public Set<Component> addComponent(Component component){
         components.add(component);
+        component.setNode(this);
         return components;
     }
 

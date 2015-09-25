@@ -1,13 +1,12 @@
-package com.sergeev.controlpanel.model.dao.node;
+package com.sergeev.controlpanel.model.dao.component;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 /**
  * Created by dmitry-sergeev on 22.09.15.
  */
-public interface NodeDaoInterface<T, Id extends Serializable> {
+public interface ComponentDaoInterface<T, Id extends Serializable> {
 
     public void persist(T entity);
 

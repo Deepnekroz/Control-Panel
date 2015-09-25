@@ -25,9 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by dmitry-sergeev on 23.09.15.
@@ -58,7 +56,7 @@ public class UserController {
             return model;
         }
 
-        User user = new User(username, new BCryptPasswordEncoder().encode(password), UserRole.ROLE_USER, new ArrayList<>(), true);
+        User user = new User(username, new BCryptPasswordEncoder().encode(password), UserRole.ROLE_USER, new HashSet<>(), true);
 
         userDao.persist(user);
 
@@ -85,16 +83,28 @@ public class UserController {
      */
     @RequestMapping(value = "/user/nodes", method = RequestMethod.GET)
     @ResponseBody
-    public String getNodes() throws UnknownHostException{
+    public ResponseEntity getNodes() throws UnknownHostException{
         LOG.debug("Received /nodes GET request");
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName(); //get logged in username
 
         User user = userDao.findByUsername(username);
-        LOG.debug("Nodes size: " + user.getNodeList().size());
+        Set<Node> nodeList = user.getNodeList();
+        LOG.debug("Nodes size: " + nodeList.size());
+        nodeList.forEach(n -> n.setUsers(null));
 
-        return Utils.constructJsonAnswer(user.getNodeList());
+        return Utils.constructJsonAnswer(nodeList);
+    }
+
+    @RequestMapping(value = "/user/node/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getNodeById(@PathVariable("id") Long id){
+        LOG.debug("Received /user/node GET request...");
+
+        Node node = nodeDao.findById(id);
+
+        return Utils.constructJsonAnswer(node);
     }
 
     @RequestMapping(value = "/user/node", method = RequestMethod.POST,
@@ -112,7 +122,6 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         node.addUser(userDao.findByUsername(username));
-        LOG.debug("User: " + node.getUsers().get(0));
 
         nodeDao.persist(node);
 

@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dmitry-sergeev on 22.09.15.
@@ -29,7 +30,7 @@ public class NodeDaoTest {
         InetAddress inetAddress = InetAddress.getByName("google.com");
         Node node = new Node("MyNode 1", inetAddress, "Debian", "1.4");
         nodeDao.persist(node);
-        List<Node> nodes = nodeDao.getAll();
+        Set<Node> nodes = nodeDao.getAll();
         boolean isFounded = false;
         for(Node n : nodes){
             if("MyNode 1".equals(n.getName())

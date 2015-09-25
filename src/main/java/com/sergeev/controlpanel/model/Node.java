@@ -7,10 +7,7 @@ import com.sergeev.controlpanel.model.user.User;
 
 import javax.persistence.*;
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by dmitry-sergeev on 22.09.15.
@@ -19,7 +16,7 @@ import java.util.Set;
 @Entity(name = "Node") @Table(name = "nodes")
 public class Node extends AbstractModel{
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     @Column(name = "id", nullable = false, unique = true)
     private long id;
 
@@ -36,10 +33,10 @@ public class Node extends AbstractModel{
     private String osVersion;
 
     @ElementCollection(targetClass = Component.class)
-    private Set<Component> components;
+    private Set<Component> components = null;
 
-    @ManyToMany(mappedBy = "nodeList", cascade = CascadeType.ALL)
-    private List<User> users;
+    @ElementCollection(targetClass = User.class)
+    private Set<User> users = null;
 
     public Node() {
     }
@@ -49,7 +46,7 @@ public class Node extends AbstractModel{
         this.inetAddress = inetAddress;
         this.osName = osName;
         this.osVersion = osVersion;
-        users = new ArrayList<>();
+        users = new HashSet<>();
     }
 
     public long getId() {
@@ -96,8 +93,7 @@ public class Node extends AbstractModel{
         this.components = components;
     }
 
-    @OneToMany(mappedBy = "nodes", orphanRemoval = true)
-    @JoinColumn(name = "id")
+    @OneToMany(mappedBy = "node", cascade = CascadeType.ALL)
     public Set<Component> getComponents(){
         return components;
     }
@@ -107,18 +103,21 @@ public class Node extends AbstractModel{
         return components;
     }
 
-
-    public List<User> getUsers() {
+    @ManyToMany(mappedBy = "nodeList", cascade = CascadeType.ALL, fetch = FetchType.LAZY
+            , targetEntity = User.class)
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
-    public List<User> addUser(User user){
-        if(!users.contains(user))
+    public Set<User> addUser(User user){
+        if (!users.contains(user)) {
             users.add(user);
+            user.addNode(this);
+        }
         return users;
     }
 

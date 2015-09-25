@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Created by dmitry-sergeev on 23.09.15.
@@ -34,7 +35,7 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/user/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public String getUser(@PathVariable(value = "username") String username){
+    public ResponseEntity getUser(@PathVariable(value = "username") String username){
         LOG.debug("Received /admin/user GET for user={}...", username);
 
         return Utils.constructJsonAnswer(userDao.findByUsername(username));
@@ -48,7 +49,7 @@ public class AdminController {
                                   @RequestParam(value = "role") String role){
         LOG.debug("Received /admin/user POST for user={}...", username);
 
-        User user = new User(username, new BCryptPasswordEncoder().encode(password), UserRole.valueOf(role), new ArrayList<>(), true);
+        User user = new User(username, new BCryptPasswordEncoder().encode(password), UserRole.valueOf(role), new HashSet<>(), true);
         userDao.persist(user);
 
         JsonObject jsonObject = new JsonObject();
@@ -65,7 +66,7 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/nodes", method = RequestMethod.GET)
     @ResponseBody
-    public String getNodes() throws UnknownHostException {
+    public ResponseEntity getNodes() throws UnknownHostException {
         LOG.debug("Received /admin/nodes GET request");
 
         return Utils.constructJsonAnswer(nodeDao.getAll());
@@ -73,7 +74,7 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/node/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String getNode(@PathVariable(value = "id") Long id)
+    public ResponseEntity getNode(@PathVariable(value = "id") Long id)
             throws UnknownHostException{
         LOG.debug("Received /admin/node/ GET request for id {}...", id);
 

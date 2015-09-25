@@ -19,6 +19,10 @@ public class Component extends AbstractModel {
     @Column(name = "install_command")
     private String installCommand;
 
+    @ManyToOne
+    @JoinColumn(name = "node_id", nullable = false)
+    private Node node;
+
     @OneToOne(fetch = FetchType.LAZY, targetEntity = ComponentType.class)
     private ComponentType componentType;
 
@@ -56,6 +60,14 @@ public class Component extends AbstractModel {
         this.componentType = componentType;
     }
 
+    public Node getNode() {
+        return node;
+    }
+
+    public void setNode(Node node) {
+        this.node = node;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,8 +77,9 @@ public class Component extends AbstractModel {
 
         if (name != null ? !name.equals(component.name) : component.name != null) return false;
         if (installCommand != null ? !installCommand.equals(component.installCommand) : component.installCommand != null) return false;
-        return !(componentType != null ? !componentType.equals(component.componentType) : component.componentType != null);
+        if (componentType != null ? !componentType.equals(component.componentType) : component.componentType != null) return false;
 
+        return true;
     }
 
     @Override

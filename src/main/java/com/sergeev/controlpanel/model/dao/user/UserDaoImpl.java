@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -47,9 +48,7 @@ public class UserDaoImpl implements UserDaoInterface<User, Long> {
 
     @Override @Transactional
     public User findById(Long aLong) {
-        User user = getCurrentSession().get(User.class, aLong);
-        Hibernate.initialize(user.getNodeList()); //'cause of Lazy initialization we need to do it manually
-        return user;
+        return getCurrentSession().get(User.class, aLong);
     }
 
     @Override @Transactional
@@ -58,10 +57,7 @@ public class UserDaoImpl implements UserDaoInterface<User, Long> {
         LOG.debug("Users with name: " + username + Arrays.toString(users.toArray()));
         if(users.size()<1)
             return null;
-        User user = users.get(0);
-        if(user!=null)
-            Hibernate.initialize(user.getNodeList()); //'cause of Lazy initialization we need to do it manually
-        return user;
+        return users.get(0);
     }
 
     @Override @Transactional
@@ -70,19 +66,13 @@ public class UserDaoImpl implements UserDaoInterface<User, Long> {
     }
 
     @Override @Transactional @SuppressWarnings("unchecked")
-    public List<User> getAll() {
-        return (List<User>)getCurrentSession().createQuery("from User")
-                .list()
-                .parallelStream()
-                .map(n -> {
-                    Hibernate.initialize(((User) n).getNodeList());
-                    return n;
-                }).collect(Collectors.toList());
+    public Set<User> getAll() {
+        return (Set<User>)getCurrentSession().createQuery("from User").list();
     }
 
     @Override @Transactional
     public void deleteAll() {
-        List<User> list = getAll();
+        Set<User> list = getAll();
         for(User user : list){
             delete(user);
         }

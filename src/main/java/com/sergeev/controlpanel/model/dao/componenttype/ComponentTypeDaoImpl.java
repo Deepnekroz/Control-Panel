@@ -1,35 +1,28 @@
-package com.sergeev.controlpanel.model.dao.node;
+package com.sergeev.controlpanel.model.dao.componenttype;
 
-import com.sergeev.controlpanel.model.Node;
+import com.sergeev.controlpanel.model.ComponentType;
 import com.sergeev.controlpanel.model.dao.user.UserDaoInterface;
-import com.sergeev.controlpanel.model.user.User;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by dmitry-sergeev on 22.09.15.
  */
 @Repository
-public class NodeDaoImpl implements NodeDaoInterface<Node, Long> {
-
-    @Autowired
-    UserDaoInterface userDao;
+public class ComponentTypeDaoImpl implements ComponentTypeDaoInterface<ComponentType, Long> {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    public NodeDaoImpl() {
+    public ComponentTypeDaoImpl() {
     }
 
-    public NodeDaoImpl(SessionFactory sessionFactory) {
+    public ComponentTypeDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -38,36 +31,35 @@ public class NodeDaoImpl implements NodeDaoInterface<Node, Long> {
     }
 
     @Override @Transactional
-    public void persist(Node entity) {
+    public void persist(ComponentType entity) {
         getCurrentSession().save(entity);
-        entity.getUsers().forEach(userDao::update);
     }
 
     @Override @Transactional
-    public void update(Node entity) {
+    public void update(ComponentType entity) {
         getCurrentSession().update(entity);
     }
 
     @Override @Transactional
-    public Node findById(Long aLong) {
-        return getCurrentSession().get(Node.class, aLong);
+    public ComponentType findById(Long aLong) {
+        return getCurrentSession().get(ComponentType.class, aLong);
     }
 
     @Override @Transactional
-    public void delete(Node entity) {
+    public void delete(ComponentType entity) {
         getCurrentSession().delete(entity);
     }
 
     @Override @Transactional @SuppressWarnings("unchecked")
-    public Set<Node> getAll() {
-        return (Set<Node>)getCurrentSession().createQuery("from Node").list();
+    public Set<ComponentType> getAll() {
+        return (Set<ComponentType>)getCurrentSession().createQuery("from ComponentType").list();
     }
 
     @Override @Transactional
     public void deleteAll() {
-        Set<Node> list = getAll();
-        for(Node node : list){
-            delete(node);
+        Set<ComponentType> list = getAll();
+        for(ComponentType componentType : list){
+            delete(componentType);
         }
     }
 }

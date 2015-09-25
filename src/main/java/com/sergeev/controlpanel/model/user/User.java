@@ -7,6 +7,7 @@ import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dmitry-sergeev on 22.09.15.
@@ -16,7 +17,7 @@ import java.util.List;
 public class User extends AbstractModel {
 
     @Id @Column(nullable = false, unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private long id;
 
     @Column(name = "name", unique = true)
@@ -28,11 +29,11 @@ public class User extends AbstractModel {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Node.class)
     @JoinTable(name = "users_nodes",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "node_id")})
-    private List<Node> nodeList;
+    private Set<Node> nodeList = null;
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
@@ -40,7 +41,7 @@ public class User extends AbstractModel {
     public User() {
     }
 
-    public User(String name, String password, UserRole role, List<Node> nodeList, boolean enabled) {
+    public User(String name, String password, UserRole role, Set<Node> nodeList, boolean enabled) {
         this.name = name;
         this.password = password;
         this.role = role;
@@ -72,12 +73,20 @@ public class User extends AbstractModel {
         this.role = role;
     }
 
-    public List<Node> getNodeList() {
+    public Set<Node> getNodeList() {
         return nodeList;
     }
 
-    public void setNodeList(List<Node> nodeList) {
+    public void setNodeList(Set<Node> nodeList) {
         this.nodeList = nodeList;
+    }
+
+    public Set<Node> addNode(Node node){
+        if (!nodeList.contains(node)) {
+            nodeList.add(node);
+            node.addUser(this);
+        }
+        return nodeList;
     }
 
     public boolean isEnabled() {

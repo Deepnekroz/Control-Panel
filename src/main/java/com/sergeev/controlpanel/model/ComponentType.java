@@ -1,5 +1,7 @@
 package com.sergeev.controlpanel.model;
 
+import org.json.simple.JSONObject;
+
 import javax.persistence.*;
 
 /**
@@ -57,11 +59,12 @@ public class ComponentType extends AbstractModel {
         return result;
     }
 
+
     @Override
-    public String toString() {
-        return "ComponentType{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("name", name);
+        return jsonObject;
     }
 }

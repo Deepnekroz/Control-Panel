@@ -96,8 +96,6 @@ public class UserController {
 
         User user = userDao.findByUsername(username);
         Set<Node> nodeList = user.getNodeList();
-        LOG.debug("Nodes size: " + nodeList.size());
-        nodeList.forEach(n -> n.setUsers(null));
 
         return Utils.constructJsonAnswer(nodeList);
     }

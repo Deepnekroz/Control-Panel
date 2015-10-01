@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sergeev.controlpanel.model.user.User;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import javax.persistence.*;
 import java.net.InetAddress;
@@ -150,15 +152,16 @@ public class Node extends AbstractModel{
     }
 
     @Override
-    public String toString() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", id);
-        jsonObject.addProperty("inetAddress", inetAddress.toString());
-        jsonObject.addProperty("osName", osName);
-        jsonObject.addProperty("osVersion", osVersion);
-        jsonObject.add("components", new Gson().toJsonTree(components));
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("inetAddress", inetAddress.toString());
+        jsonObject.put("osName", osName);
+        jsonObject.put("osVersion", osVersion);
+        JSONArray componentsJson = new JSONArray();
+        components.forEach(c -> componentsJson.add(c.toJson()));
+        jsonObject.put("components", componentsJson);
+        return jsonObject;
 
-
-        return jsonObject.toString();
     }
 }

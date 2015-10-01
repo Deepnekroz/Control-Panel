@@ -5,6 +5,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sergeev.controlpanel.controller.MainController;
 import com.sergeev.controlpanel.model.AbstractModel;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,21 +24,18 @@ public class Utils {
     public static ResponseEntity constructJsonAnswer(AbstractModel entity){
         if(entity==null)
             return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
-        JsonObject jsonObject = new JsonObject();
         int status = 200;
-        jsonObject.addProperty("status", status);
-        jsonObject.add("entity", new JsonParser().parse(entity.toString())); //TODO redundant parse
-        return new ResponseEntity<>(jsonObject.toString(), HttpStatus.valueOf(status));
+
+        return new ResponseEntity<>(entity.toJson().toJSONString(), HttpStatus.valueOf(status));
     }
 
     public static ResponseEntity constructJsonAnswer(Set<? extends AbstractModel> entities){
         if(entities==null)
             return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
-        JsonObject jsonObject = new JsonObject();
         int status = 200;
-        jsonObject.addProperty("status", status);
-        jsonObject.add("entities", new Gson().toJsonTree(entities));
-        return new ResponseEntity<>(jsonObject.toString(), HttpStatus.valueOf(status));
+        JSONArray jsonArray = new JSONArray();
+        entities.forEach(e -> jsonArray.add(e.toJson()));
+        return new ResponseEntity<>(jsonArray.toJSONString(), HttpStatus.valueOf(status));
     }
 
     public static ResponseEntity status(int status){

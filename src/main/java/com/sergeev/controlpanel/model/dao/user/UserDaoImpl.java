@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -67,7 +68,12 @@ public class UserDaoImpl implements UserDaoInterface<User, Long> {
 
     @Override @Transactional @SuppressWarnings("unchecked")
     public Set<User> getAll() {
-        return (Set<User>)getCurrentSession().createQuery("from User").list();
+
+        List<User> userList = (List<User>) getCurrentSession().createQuery("from User").list();
+        Set<User> userSet = new HashSet<>();
+        userList.forEach(n -> userSet.add(n));
+
+        return userSet;
     }
 
     @Override @Transactional

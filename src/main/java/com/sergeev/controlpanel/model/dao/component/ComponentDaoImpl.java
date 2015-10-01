@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -53,7 +55,10 @@ public class ComponentDaoImpl implements ComponentDaoInterface<Component, Long> 
 
     @Override @Transactional @SuppressWarnings("unchecked")
     public Set<Component> getAll() {
-        return (Set<Component>)getCurrentSession().createQuery("from Component").list();
+        List<Component> componentList = (List<Component>) getCurrentSession().createQuery("from Component").list();
+        Set<Component> componentSet = new HashSet<>();
+        componentList.forEach(n -> componentSet.add(n));
+        return componentSet;
     }
 
     @Override @Transactional

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -60,7 +61,10 @@ public class NodeDaoImpl implements NodeDaoInterface<Node, Long> {
 
     @Override @Transactional @SuppressWarnings("unchecked")
     public Set<Node> getAll() {
-        return (Set<Node>)getCurrentSession().createQuery("from Node").list();
+        List<Node> nodesList = (List<Node>)getCurrentSession().createQuery("from Node").list();
+        Set<Node> nodesSet = new HashSet<>();
+        nodesList.forEach(n -> nodesSet.add(n));
+        return nodesSet;
     }
 
     @Override @Transactional

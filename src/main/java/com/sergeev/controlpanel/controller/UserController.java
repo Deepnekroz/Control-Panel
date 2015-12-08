@@ -1,11 +1,9 @@
 package com.sergeev.controlpanel.controller;
 
-import com.google.gson.JsonObject;
 import com.sergeev.controlpanel.model.Component;
 import com.sergeev.controlpanel.model.ComponentType;
 import com.sergeev.controlpanel.model.Node;
-import com.sergeev.controlpanel.model.dao.component.ComponentDaoImpl;
-import com.sergeev.controlpanel.model.dao.component.ComponentDaoInterface;
+import com.sergeev.controlpanel.model.dao.component.ComponentDao;
 import com.sergeev.controlpanel.model.dao.node.NodeDaoImpl;
 import com.sergeev.controlpanel.model.dao.user.UserDaoImpl;
 import com.sergeev.controlpanel.model.user.User;
@@ -13,14 +11,11 @@ import com.sergeev.controlpanel.model.user.UserRole;
 import com.sergeev.controlpanel.utils.Utils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -44,7 +39,7 @@ public class UserController {
     private NodeDaoImpl nodeDao;
 
     @Autowired
-    private ComponentDaoInterface componentDao;
+    private ComponentDao componentDao;
 
 
     @RequestMapping(value = "/adduser", method = RequestMethod.POST,
@@ -101,7 +96,6 @@ public class UserController {
     @ResponseBody
     public Node getNodeById(@PathVariable("id") Long id){
         LOG.debug("Received /user/node GET request...");
-
         return nodeDao.findById(id);
     }
 
@@ -114,15 +108,11 @@ public class UserController {
                                   @RequestParam(value = "osVersion") String osVersion)
             throws UnknownHostException{
         LOG.debug("Received /user/node POST request...");
-
         Node node = new Node(name, InetAddress.getByName(inetaddr), osName, osVersion);
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         node.addUser(userDao.findByUsername(username));
-
         nodeDao.persist(node);
-
         return Utils.status(200);
     }
 
@@ -146,12 +136,10 @@ public class UserController {
     @ResponseBody
     public Node getNodeStatus(@PathVariable(value = "id") Long id) {
         Node node = nodeDao.findById(id);
-
         /*
         Get node status (free -m, etc) via ssh
         then return in as JSON
          */
-
         return node;
     }
 }

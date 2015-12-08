@@ -6,7 +6,6 @@ import com.sergeev.controlpanel.model.dao.node.NodeDaoImpl;
 import com.sergeev.controlpanel.model.dao.user.UserDaoImpl;
 import com.sergeev.controlpanel.model.user.User;
 import com.sergeev.controlpanel.model.user.UserRole;
-import com.sergeev.controlpanel.utils.Utils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,8 +37,6 @@ public class AdminController {
     @ResponseBody
     public User getUser(@PathVariable(value = "username") String username){
         LOG.debug("Received /admin/user GET for user={}...", username);
-
-//        return Utils.constructJsonAnswer(userDao.findByUsername(username));
         return userDao.findByUsername(username);
     }
 
@@ -71,7 +67,6 @@ public class AdminController {
     @ResponseBody
     public Set<Node> getNodes() throws UnknownHostException {
         LOG.debug("Received /admin/nodes GET request");
-
         return nodeDao.getAll();
     }
 
@@ -80,7 +75,6 @@ public class AdminController {
     public Node getNode(@PathVariable(value = "id") Long id)
             throws UnknownHostException{
         LOG.debug("Received /admin/node/ GET request for id {}...", id);
-
         return nodeDao.findById(id);
     }
 
@@ -91,7 +85,6 @@ public class AdminController {
                                            @RequestParam(value = "role") String role){
         LOG.debug("Received /admin/user/permission POST for user={}...", username);
 
-
         User user = userDao.findByUsername(username);
         user.setRole(UserRole.valueOf(role));
         userDao.update(user);
@@ -100,6 +93,7 @@ public class AdminController {
         jsonObject.addProperty("status", "ok");
         return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
     }
+
 
 
 }

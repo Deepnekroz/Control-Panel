@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * Created by dmitry-sergeev on 22.09.15.
  */
-public interface UserDaoInterface<T, Id extends Serializable> {
+public interface UserDao<T, Id extends Serializable> {
 
     public void persist(T entity);
 

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sergeev.controlpanel.model.user.User;
+import com.sun.istack.internal.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -25,7 +26,7 @@ public class Node extends AbstractModel{
     @Column(name = "name")
     private String name;
 
-    @Column(name = "inetaddr")
+    @Column(name = "inetaddr") @NotNull
     private InetAddress inetAddress;
 
     @Column(name = "osName")

@@ -1,5 +1,7 @@
 package com.sergeev.controlpanel.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.JsonObject;
 import com.sergeev.controlpanel.model.AbstractModel;
 import com.sergeev.controlpanel.model.Node;
@@ -22,9 +24,10 @@ public class User extends AbstractModel {
     @GeneratedValue
     private long id;
 
-    @Column(name = "name", unique = true)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 

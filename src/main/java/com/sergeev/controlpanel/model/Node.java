@@ -151,18 +151,4 @@ public class Node extends AbstractModel{
         result = 31 * result + (components != null ? components.hashCode() : 0);
         return result;
     }
-
-    @Override
-    public JSONObject toJson() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", id);
-        jsonObject.put("inetAddress", inetAddress.toString());
-        jsonObject.put("osName", osName);
-        jsonObject.put("osVersion", osVersion);
-        JSONArray componentsJson = new JSONArray();
-        components.forEach(c -> componentsJson.add(c.toJson()));
-        jsonObject.put("components", componentsJson);
-        return jsonObject;
-
-    }
 }

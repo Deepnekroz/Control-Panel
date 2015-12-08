@@ -91,17 +91,4 @@ public class Component extends AbstractModel {
         result = 31 * result + (componentType != null ? componentType.hashCode() : 0);
         return result;
     }
-
-    @Override @SuppressWarnings("unchecked")
-    public JSONObject toJson() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", id);
-        jsonObject.put("name", name);
-        jsonObject.put("install_command", installCommand);
-        Long nodeId = null;
-        if(node != null)
-            nodeId = node.getId();
-        jsonObject.put("node_id", nodeId);
-        return jsonObject;
-    }
 }

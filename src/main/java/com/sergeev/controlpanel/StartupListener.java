@@ -1,9 +1,7 @@
 package com.sergeev.controlpanel;
 
-import com.sergeev.controlpanel.model.Node;
-import com.sergeev.controlpanel.model.dao.node.NodeDaoInterface;
-import com.sergeev.controlpanel.model.dao.user.UserDaoImpl;
-import com.sergeev.controlpanel.model.dao.user.UserDaoInterface;
+import com.sergeev.controlpanel.model.dao.node.NodeDao;
+import com.sergeev.controlpanel.model.dao.user.UserDao;
 import com.sergeev.controlpanel.model.user.User;
 import com.sergeev.controlpanel.model.user.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +10,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -23,10 +19,10 @@ import java.util.HashSet;
 public class StartupListener implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
-    UserDaoInterface userDao;
+    UserDao userDao;
 
     @Autowired
-    NodeDaoInterface nodeDao;
+    NodeDao nodeDao;
 
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event){

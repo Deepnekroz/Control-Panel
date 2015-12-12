@@ -1,7 +1,6 @@
 package com.sergeev.controlpanel.model.dao.user;
 
 import com.sergeev.controlpanel.model.user.User;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -13,13 +12,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by dmitry-sergeev on 22.09.15.
  */
 @Repository
-public class UserDaoImpl implements UserDaoInterface<User, Long> {
+public class UserDaoImpl implements UserDao<User, Long> {
 
     private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(UserDaoImpl.class);
 

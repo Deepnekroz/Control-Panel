@@ -1,11 +1,11 @@
 package com.sergeev.controlpanel.controller;
 
 import com.google.gson.JsonObject;
+import com.sergeev.controlpanel.model.Node;
 import com.sergeev.controlpanel.model.dao.node.NodeDaoImpl;
 import com.sergeev.controlpanel.model.dao.user.UserDaoImpl;
 import com.sergeev.controlpanel.model.user.User;
 import com.sergeev.controlpanel.model.user.UserRole;
-import com.sergeev.controlpanel.utils.Utils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by dmitry-sergeev on 23.09.15.
@@ -35,10 +35,9 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/user/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getUser(@PathVariable(value = "username") String username){
+    public User getUser(@PathVariable(value = "username") String username){
         LOG.debug("Received /admin/user GET for user={}...", username);
-
-        return Utils.constructJsonAnswer(userDao.findByUsername(username));
+        return userDao.findByUsername(username);
     }
 
     @RequestMapping(value = "/admin/user", method = RequestMethod.POST,
@@ -66,19 +65,17 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/nodes", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getNodes() throws UnknownHostException {
+    public Set<Node> getNodes() throws UnknownHostException {
         LOG.debug("Received /admin/nodes GET request");
-
-        return Utils.constructJsonAnswer(nodeDao.getAll());
+        return nodeDao.getAll();
     }
 
     @RequestMapping(value = "/admin/node/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getNode(@PathVariable(value = "id") Long id)
+    public Node getNode(@PathVariable(value = "id") Long id)
             throws UnknownHostException{
         LOG.debug("Received /admin/node/ GET request for id {}...", id);
-
-        return Utils.constructJsonAnswer(nodeDao.findById(id));
+        return nodeDao.findById(id);
     }
 
     @RequestMapping(value = "/admin/user/permission", method = RequestMethod.POST,
@@ -88,7 +85,6 @@ public class AdminController {
                                            @RequestParam(value = "role") String role){
         LOG.debug("Received /admin/user/permission POST for user={}...", username);
 
-
         User user = userDao.findByUsername(username);
         user.setRole(UserRole.valueOf(role));
         userDao.update(user);
@@ -97,6 +93,7 @@ public class AdminController {
         jsonObject.addProperty("status", "ok");
         return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
     }
+
 
 
 }

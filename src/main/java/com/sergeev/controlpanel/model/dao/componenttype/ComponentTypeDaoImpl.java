@@ -1,7 +1,6 @@
 package com.sergeev.controlpanel.model.dao.componenttype;
 
 import com.sergeev.controlpanel.model.ComponentType;
-import com.sergeev.controlpanel.model.dao.user.UserDaoInterface;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import java.util.Set;
  * Created by dmitry-sergeev on 22.09.15.
  */
 @Repository
-public class ComponentTypeDaoImpl implements ComponentTypeDaoInterface<ComponentType, Long> {
+public class ComponentTypeDaoImpl implements ComponentTypeDao<ComponentType, Long> {
 
     @Autowired
     private SessionFactory sessionFactory;

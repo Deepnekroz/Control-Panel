@@ -30,7 +30,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     public UserDetails loadUserByUsername(final String username)
             throws UsernameNotFoundException {
 
-        com.sergeev.controlpanel.model.user.User user = (com.sergeev.controlpanel.model.user.User)userDao.findByUsername(username);
+        com.sergeev.controlpanel.model.user.User user = userDao.findByUsername(username);
         if(user==null)
             return null;
 

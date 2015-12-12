@@ -13,7 +13,7 @@ public class ComponentInstaller {
      */
     public boolean installComponent(Node node, Component component){
         //use SSH
-        //String answer = someMethod(node, component.component.getInstallCommand())
+        //String answer = someMethod(node, component.getInstallCommand())
         //Logic to proceed answer.
         return false;
     }

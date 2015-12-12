@@ -58,13 +58,4 @@ public class ComponentType extends AbstractModel {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
-
-
-    @Override
-    public JSONObject toJson() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", id);
-        jsonObject.put("name", name);
-        return jsonObject;
-    }
 }

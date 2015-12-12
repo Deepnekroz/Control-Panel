@@ -1,9 +1,7 @@
 package com.sergeev.controlpanel.model.dao.node;
 
 import com.sergeev.controlpanel.model.Node;
-import com.sergeev.controlpanel.model.dao.user.UserDaoInterface;
-import com.sergeev.controlpanel.model.user.User;
-import org.hibernate.Hibernate;
+import com.sergeev.controlpanel.model.dao.user.UserDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by dmitry-sergeev on 22.09.15.
  */
 @Repository
-public class NodeDaoImpl implements NodeDaoInterface<Node, Long> {
+public class NodeDaoImpl implements NodeDao<Node, Long> {
 
     @Autowired
-    UserDaoInterface userDao;
+    UserDao userDao;
 
     @Autowired
     private SessionFactory sessionFactory;

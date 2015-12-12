@@ -21,23 +21,6 @@ public class Utils {
 
     private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(Utils.class);
 
-    public static ResponseEntity constructJsonAnswer(AbstractModel entity){
-        if(entity==null)
-            return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
-        int status = 200;
-
-        return new ResponseEntity<>(entity.toJson().toJSONString(), HttpStatus.valueOf(status));
-    }
-
-    public static ResponseEntity constructJsonAnswer(Set<? extends AbstractModel> entities){
-        if(entities==null)
-            return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
-        int status = 200;
-        JSONArray jsonArray = new JSONArray();
-        entities.forEach(e -> jsonArray.add(e.toJson()));
-        return new ResponseEntity<>(jsonArray.toJSONString(), HttpStatus.valueOf(status));
-    }
-
     public static ResponseEntity status(int status){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("status", HttpStatus.valueOf(status).name());

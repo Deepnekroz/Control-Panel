@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sergeev.controlpanel.model.user.User;
+import com.sun.istack.internal.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -25,7 +26,7 @@ public class Node extends AbstractModel{
     @Column(name = "name")
     private String name;
 
-    @Column(name = "inetaddr")
+    @Column(name = "inetaddr") @NotNull
     private InetAddress inetAddress;
 
     @Column(name = "osName")
@@ -149,19 +150,5 @@ public class Node extends AbstractModel{
         result = 31 * result + (osVersion != null ? osVersion.hashCode() : 0);
         result = 31 * result + (components != null ? components.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public JSONObject toJson() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", id);
-        jsonObject.put("inetAddress", inetAddress.toString());
-        jsonObject.put("osName", osName);
-        jsonObject.put("osVersion", osVersion);
-        JSONArray componentsJson = new JSONArray();
-        components.forEach(c -> componentsJson.add(c.toJson()));
-        jsonObject.put("components", componentsJson);
-        return jsonObject;
-
     }
 }

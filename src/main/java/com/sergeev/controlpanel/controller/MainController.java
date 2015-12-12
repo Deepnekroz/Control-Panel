@@ -41,11 +41,9 @@ public class MainController {
         if (error != null) {
             model.addObject("error", "Invalid username and password!");
         }
-
         if (logout != null) {
             model.addObject("msg", "You've been logged out successfully.");
         }
-
         if (registered != null) {
             model.addObject("registered", registered);
         }
@@ -58,7 +56,6 @@ public class MainController {
     @ExceptionHandler(Exception.class) @ResponseBody
     public String handleAllException(Exception ex) {
         JsonObject jsonObject = new JsonObject();
-
         if(ex instanceof UnknownHostException){
             jsonObject.addProperty("status", "400");
             jsonObject.addProperty("message", "Unknown host address given");
@@ -66,7 +63,6 @@ public class MainController {
             jsonObject.addProperty("status", "400");
             jsonObject.addProperty("message", ex.toString());
         }
-
         return jsonObject.toString();
     }
 }

@@ -4,14 +4,13 @@ import com.sergeev.controlpanel.model.Component;
 import com.sergeev.controlpanel.model.ComponentType;
 import com.sergeev.controlpanel.model.Node;
 import com.sergeev.controlpanel.model.dao.node.NodeDaoImpl;
-import com.sergeev.controlpanel.model.dao.node.NodeDaoInterface;
+import com.sergeev.controlpanel.model.dao.node.NodeDao;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
-import org.springframework.security.access.SecurityConfig;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -67,7 +66,7 @@ public class ApplicationContextConfig {
 
     @Autowired
     @Bean(name = "nodeDao")
-    public NodeDaoInterface getUserDao(SessionFactory sessionFactory) {
+    public NodeDao getUserDao(SessionFactory sessionFactory) {
         return new NodeDaoImpl(sessionFactory);
     }
 

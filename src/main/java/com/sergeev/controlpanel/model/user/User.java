@@ -1,14 +1,13 @@
 package com.sergeev.controlpanel.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.JsonObject;
 import com.sergeev.controlpanel.model.AbstractModel;
 import com.sergeev.controlpanel.model.Node;
-import com.sun.istack.internal.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -22,9 +21,10 @@ public class User extends AbstractModel {
     @GeneratedValue
     private long id;
 
-    @Column(name = "name", unique = true)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -97,30 +97,5 @@ public class User extends AbstractModel {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
-    }
-
-    @Override
-    public String toString() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", id);
-        jsonObject.addProperty("name", name);
-        jsonObject.addProperty("password", password);
-        jsonObject.addProperty("role", role.name());
-
-        return jsonObject.toString();
-    }
-
-    @Override
-    public JSONObject toJson() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", id);
-        jsonObject.put("name", name);
-        jsonObject.put("password", password);
-        jsonObject.put("user_role", role.name());
-        JSONArray nodes = new JSONArray();
-        nodeList.forEach(n -> nodes.add(n.getId()) );
-        jsonObject.put("nodes", nodes);
-        jsonObject.put("is_enabled", enabled);
-        return jsonObject;
     }
 }

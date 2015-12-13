@@ -1,16 +1,12 @@
 package com.sergeev.controlpanel.model;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.sergeev.controlpanel.model.user.User;
 import com.sun.istack.internal.NotNull;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import javax.persistence.*;
 import java.net.InetAddress;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by dmitry-sergeev on 22.09.15.
@@ -35,6 +31,9 @@ public class Node extends AbstractModel{
     @Column(name = "osVersion")
     private String osVersion;
 
+    @Column(name = "publicKey", unique = true, nullable = false)
+    private String publicKey; // Looks like "a6:90:99:9c:c5:15:d8:07:b5:fa:c5:79:77:93:9b:b6"
+
     @ElementCollection(targetClass = Component.class)
     private Set<Component> components = null;
 
@@ -44,12 +43,21 @@ public class Node extends AbstractModel{
     public Node() {
     }
 
-    public Node(String name, InetAddress inetAddress, String osName, String osVersion) {
+    public Node(String name, InetAddress inetAddress, String osName, String osVersion, String publicKey) {
         this.name = name;
         this.inetAddress = inetAddress;
         this.osName = osName;
         this.osVersion = osVersion;
         users = new HashSet<>();
+        this.publicKey = publicKey;
+    }
+
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
     }
 
     public long getId() {
@@ -92,13 +100,13 @@ public class Node extends AbstractModel{
         this.osVersion = osVersion;
     }
 
-    public void setComponents(Set<Component> components) {
-        this.components = components;
+    @OneToMany(mappedBy = "node", cascade = CascadeType.ALL)
+    public Set<Component> getComponents() {
+        return components;
     }
 
-    @OneToMany(mappedBy = "node", cascade = CascadeType.ALL)
-    public Set<Component> getComponents(){
-        return components;
+    public void setComponents(Set<Component> components) {
+        this.components = components;
     }
 
     public Set<Component> addComponent(Component component){
